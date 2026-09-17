@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>CopySelect Settings</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="accessibility.css">
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand sidebar-brand"><img src="icon_48.png" alt=""><span class="brand-lockup"><span class="brand-word">COPYS<span class="brand-slash">/</span>LECT</span><small class="brand-local-first">local-first</small></span><span class="brand-meta"><small id="sidebarVersion" class="version-tip" tabindex="0">v3.7.8.20</small></span></div>
+  <div class="mode-switch" role="group" aria-label="Settings mode">
+    <button id="modeSimple" class="mode-btn active" type="button" aria-pressed="true">Simple</button>
+    <button id="modeAdvanced" class="mode-btn" type="button" aria-pressed="false">Advanced</button>
+  </div>
+  <nav class="nav" aria-label="Settings sections">
+    <div class="nav-group"><div class="nav-group-label">COPYING</div>
+      <button class="active" data-page="general">General</button>
+      <button data-page="notifications">Copy confirmation</button>
+      <button data-page="metadata">Metadata &amp; Templates</button>
+      <button class="advanced-only nav-obsolete" data-page="formatting">Formatting</button>
+    </div>
+    <div class="nav-group"><div class="nav-group-label">HISTORY</div>
+      <button class="advanced-only" data-page="storage">Clipboard Storage Settings</button>
+      <button data-page="history">Clipboard History <span id="historyCount" class="count">0</span></button>
+      <button data-page="collections">Collections</button>
+    </div>
+    <div class="nav-group advanced-only"><div class="nav-group-label">WORKFLOWS</div>
+      <button data-page="sites">Site Rules</button>
+      <button data-page="profiles">Profiles</button>
+    </div>
+    <div class="nav-group advanced-only"><div class="nav-group-label">TOOLS</div>
+      <button data-page="shortcuts">Read aloud</button>
+      <button data-page="backup">Data &amp; Backup</button>
+    </div>
+    <div class="nav-group"><div class="nav-group-label">INFO</div>
+      <button class="advanced-only" data-page="advanced">Activity &amp; Privacy</button>
+      <button data-page="about">About</button>
+    </div>
+  </nav>
+  <div class="side-foot">
+    <label class="status-pill" id="sideStatus"><span>● CopySelect active</span><input id="sideMaster" class="toggle" type="checkbox" aria-label="Enable CopySelect"></label>
+  </div>
+</aside>
+
+<main class="main" aria-labelledby="pageTitle">
+  <div class="topbar">
+    <div class="title"><h1 id="pageTitle" tabindex="-1">General &amp; copying</h1><p id="pageDesc">Copy behavior, selection rules, and output.</p></div>
+    <input id="search" class="search" aria-label="Search settings" placeholder="Search settings…">
+  </div>
+
+<section class="page active" id="page-general">
+  <div class="two-col">
+    <div class="card settings-card general-core-card">
+      <h2>Core behavior</h2>
+      <div class="general-master-sticky" aria-hidden="true"><span>Tiny switch. Surprisingly bossy.</span><svg viewBox="0 0 100 52" focusable="false"><path d="M8 44 C34 31, 56 17, 90 8"/><path d="M79 5 L91 8 L83 18"/></svg></div>
+      <div class="row searchable general-master-row"><div class="meta"><b>Enable CopySelect <span class="help" tabindex="0" data-tip="Automatic copying decides whether a new selection is copied at all.&#10;Local history decides whether successful copies are saved for later.&#10;You can pause one without changing the other.">?</span></b><small>Master switch</small></div><div class="control"><input data-key="enabled" class="toggle" type="checkbox"></div></div>
+      <div class="row searchable"><div class="meta"><b>Copy delay <span class="help" tabindex="0" data-tip="Wait after selecting before copying.&#10;Default: 450 ms&#10;&#10;Around 100—150 ms is&#10;usually enough for selection settling&#10;and local WordWatch processing.&#10;&#10;A longer delay is useful for:&#10;• refining a selection&#10;• ignoring transient selections&#10;• pasting over a selection&#10;without replacing the clipboard">?</span></b></div><div class="control"><input data-key="copyDelayEnabled" class="toggle" type="checkbox"><div class="control-inline"><input data-key="copyDelay" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" class="num-sm four-digit-value"><span class="unit">ms</span></div></div></div>
+      <div class="row searchable"><div class="meta"><b>Minimum selection</b><small>Ignore selections shorter than this.</small></div><div class="control"><div class="control-inline"><input data-key="minSelectionLength" type="number" min="1" class="num-sm"><span class="unit">chars</span></div></div></div>
+      <div class="row searchable"><div class="meta"><b>Duplicate suppression</b><small>Don't copy the same text again within this interval.</small></div><div class="control"><input data-key="duplicateSuppression" class="toggle" type="checkbox"><div class="control-inline"><input data-key="duplicateWindowSeconds" type="number" min="0" class="num-sm"><span class="unit">sec</span></div></div></div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h2>Copy mode <span class="heading-note">Profiles and site rules can override this. <span class="help" tabindex="0" data-tip="The active profile or a matching Site Rule can replace the copy mode chosen here.">?</span></span></h2>
+        <select data-key="copyMode" class="full"><option value="plain">Plain Text</option><option value="original">Rich Text</option><option value="markdown">Markdown Link</option><option value="quote-source">Quote + Source</option><option value="url-title">Text + Reference + Date</option><option value="custom">Make your own template...</option></select>
+        <div class="copy-mode-preview"><span>Preview</span><div id="copyModePreview">The quick brown fox keeps its line breaks.</div></div>
+      </div>
+      <div class="card"><h2>Status</h2><div class="section-note" id="statusText" role="status" aria-live="polite">CopySelect is active and ready.</div></div>
+    </div>
+  </div>
+  <div class="card compact-card">
+    <div class="card-headline"><h2>Quick actions</h2><button class="btn" id="jumpHistory">Open history</button></div>
+    <div class="actions"><button class="btn" data-pause="5">Pause 5m</button><button class="btn" data-pause="30">Pause 30m</button><button class="btn" data-pause="60">Pause 1h</button><button class="btn" data-pause="restart">Until restart</button><button class="btn good" id="resumeBtn">Resume</button></div>
+  </div>
+</section>
+
+<section class="page" id="page-behavior">
+  <div class="card settings-card">
+    <h2>Selection & input behavior</h2>
+    <div class="row searchable"><div class="meta"><b>Text fields</b><small>Inputs, text areas, and similar form controls.</small></div><div class="control"><input data-key="enableTextBoxes" class="toggle" type="checkbox"></div></div>
+    <div class="row searchable"><div class="meta"><b>Rich-text editors</b><small>Content-editable areas such as webmail and rich-text editors. Some apps, including Google Docs, may not expose selections.</small></div><div class="control"><input data-key="enableContentEditable" class="toggle" type="checkbox"></div></div>
+    <div class="row searchable"><div class="meta"><b>Middle-click paste</b><small>Paste the next Paste Stack item, or the current clipboard when the stack is empty.</small></div><div class="control"><input data-key="pasteOnMiddleClick" class="toggle" type="checkbox"></div></div>
+      <div class="row searchable"><div class="meta"><b>Selection trigger <span class="help" tabindex="0" data-tip="Any selection:&#10;Copies click selections and drag selections.&#10;&#10;Click selection:&#10;Copies words selected by double-clicking&#10;and paragraphs selected by triple-clicking.&#10;&#10;Drag selection:&#10;Copies text selected by dragging.">?</span></b><small>Click selection includes double-clicked words and triple-clicked paragraphs.</small></div><div class="control"><select data-key="selectionTrigger"><option value="any">Any selection</option><option value="word">Click selection</option><option value="range">Drag selection</option></select></div></div>
+    <div class="row searchable"><div class="meta"><b>Ignore whitespace-only selections</b></div><div class="control"><input data-key="ignoreWhitespaceOnly" class="toggle" type="checkbox"></div></div>
+    <div class="row searchable"><div class="meta"><b>Modifier override <span class="help" tabindex="0" data-tip="Hold the selected modifier&#10;while making a selection.&#10;&#10;Enable&#10;Temporarily turns automatic copying on.&#10;&#10;Disable&#10;Temporarily prevents automatic copying.">?</span></b></div><div class="control"><input data-key="enableModifierKey" class="toggle" type="checkbox"><select data-key="modifierKey"><option>CTRL</option><option>ALT</option><option>SHIFT</option><option>CAPS</option><option>CTRL+ALT</option></select><select data-key="modifierKeyAction"><option value="enable">Enable</option><option value="disable">Disable</option></select></div></div>
+  </div>
+</section>
+
+<section class="page" id="page-formatting">
+  <div class="two-col">
+    <div class="card settings-card">
+      <h2>Text cleanup</h2>
+      <div class="row searchable"><div class="meta"><b>Trim surrounding whitespace</b></div><div class="control"><input data-key="trimWhitespace" class="toggle" type="checkbox"></div></div>
+      <div class="row searchable"><div class="meta"><b>Collapse repeated spaces</b></div><div class="control"><input data-key="normalizeWhitespace" class="toggle" type="checkbox"></div></div>
+      <div class="row searchable"><div class="meta"><b>Preserve line breaks</b></div><div class="control"><input data-key="preserveLineBreaks" class="toggle" type="checkbox"></div></div>
+      <div class="row searchable"><div class="meta"><b>Remove zero-width characters</b></div><div class="control"><input data-key="removeZeroWidth" class="toggle" type="checkbox"></div></div>
+      <div class="row searchable"><div class="meta"><b>Join soft-wrapped lines</b></div><div class="control"><input data-key="joinWrappedLines" class="toggle" type="checkbox"></div></div>
+        <div class="row searchable"><div class="meta"><b>Copy links as</b></div><div class="control link-copy-control"><select data-key="linkCopyMode"><option value="html">HTML Links</option><option value="text-url">Link text — URL</option><option value="url">URL only</option><option value="markdown">Markdown link</option></select></div></div>
+    </div>
+    <div class="card">
+      <h2>Template builder <span class="help" tabindex="0" data-tip="Available tokens:&#10;&#10;{text} = copied text&#10;{url} = page URL&#10;{title} = page title&#10;{domain} = domain&#10;{date} = date&#10;{time} = time&#10;{selectionLength} = selection length">?</span></h2><p class="tiny">Choose the template used when “Make your own template…” is selected in General &gt; Copy mode.<br>Use a preset or create your own by arranging text and source tokens in the order you want them copied.</p>
+      <div class="template-library"><label for="templateSelect">Template</label><select id="templateSelect"><option value="">New template…</option></select><button id="saveTemplate" type="button" class="btn">Save template</button></div>
+      <textarea data-key="customTemplate"></textarea>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="page-metadata">
+  <div class="two-col metadata-layout">
+    <div class="stack">
+      <div class="card settings-card simple-metadata-card">
+        <div class="card-headline metadata-toggle-heading"><div><h2>Metadata</h2><div class="tiny">Choose what to include with copied text, then control how it is arranged and formatted.</div></div><div class="actions"><label class="channel-toggle"><input data-key="includeMetadata" class="toggle" type="checkbox" aria-label="Enable metadata"></label><button id="resetMetadata" class="btn">↺ Defaults</button></div></div>
+        <div class="metadata-checks">
+          <label><input data-key="includeTitle" type="checkbox"> Page title</label><label><input data-key="includeURL" type="checkbox"> URL</label><label><input data-key="includeDomain" type="checkbox"> Domain</label><label><input data-key="includeDate" type="checkbox"> Date</label><label><input data-key="includeTime" type="checkbox"> Time</label><label><input data-key="includeSelectionLength" type="checkbox"> Length</label>
+        </div>
+        <div class="simple-metadata-order"><b>Copy order</b><small>Drag the handles to arrange enabled details around the fixed copied-text anchor.</small><div id="simpleMetadataOrder" class="metadata-order-strip" aria-label="Metadata copy order"></div></div>
+        <div class="row metadata-dependent"><div class="meta"><b>Separator</b><small>Between metadata lines and copied text</small></div><div class="control separator-control"><select data-key="metadataSeparator"><option value="\n">New line</option><option value="\n\n">Blank line</option><option value=" | ">Pipe</option><option value="\t">Tab</option><option value="custom">Custom…</option></select><input data-key="metadataCustomSeparator" type="text" maxlength="20" placeholder="·" aria-label="Custom separator"></div></div>
+      </div>
+
+      <div class="card simple-before-after-card">
+        <h2>Before & after text <span class="help" tabindex="0" data-tip="These are literal prefixes and suffixes. They are separate from the generated metadata block.">?</span></h2>
+        <div class="form-grid"><div class="field"><label>Before copied text</label><input data-key="metadataBeforeText" type="text" placeholder="Quote:"></div><div class="field"><label>After copied text</label><input data-key="metadataAfterText" type="text" placeholder="— saved from research"></div></div>
+      </div>
+
+      <div class="card date-time-card">
+        <div class="format-grid">
+          <div>
+            <h2>Date <span class="help" tabindex="0" data-tip="Custom date tokens:&#10;&#10;YYYY = 4-digit year&#10;YY = 2-digit year&#10;MMMM = full month&#10;MMM = short month&#10;MM = month number&#10;DD = 2-digit day&#10;D = day&#10;DDD = weekday (Mon)&#10;&#10;Examples:&#10;DDD, DD/MM/YYYY&#10;YYYY-MM-DD">?</span></h2>
+            <div class="form-grid"><div class="field"><label>Format</label><select data-key="dateFormat"><option value="locale">System default</option><option value="iso">YYYY-MM-DD</option><option value="dmy">DD/MM/YYYY</option><option value="mdy">MM/DD/YYYY</option><option value="short">MMM_DD</option><option value="custom">Custom…</option></select></div><div class="field"><label>Custom date</label><input data-key="dateCustomFormat" type="text" placeholder="DD/MM/YYYY"></div></div>
+          </div>
+          <div>
+            <h2>Time <span class="help" tabindex="0" data-tip="Custom time tokens:&#10;&#10;HH = 24-hour&#10;hh = 12-hour&#10;mm = minutes&#10;ss = seconds&#10;A = AM/PM&#10;&#10;Examples:&#10;HH:mm&#10;hh:mm A">?</span></h2>
+            <div class="form-grid"><div class="field"><label>Format</label><select data-key="timeFormat"><option value="locale">System default</option><option value="hm24">HH:mm</option><option value="hms24">HH:mm:ss</option><option value="hm12">12-hour</option><option value="custom">Custom…</option></select></div><div class="field"><label>Custom time</label><input data-key="timeCustomFormat" type="text" placeholder="HH:mm"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card sticky-preview">
+      <div class="card-headline"><h2>Custom template preview</h2><button id="refreshMetadataPreview" class="btn">↻ Preview</button></div>
+      <div class="tiny">Example selection</div><pre id="metadataPreview" class="metadata-preview"></pre>
+      <div class="footer-note">Updates as you change the fields.</div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="page-notifications">
+  <div class="feedback-page">
+    <div class="feedback-left">
+      <div class="card feedback-core">
+        <div class="card-headline"><div><h2>Confirmation</h2><div class="tiny">Choose one or more independent ways to confirm a successful copy.</div></div><button id="resetAllAppearance" class="btn icon-btn" title="Reset all feedback" aria-label="Reset all feedback">↺</button></div>
+        <div class="feedback-core-grid">
+          <select data-key="notificationMode" class="hidden" aria-hidden="true" tabindex="-1"><option value="none">None</option><option value="visual">Visual</option><option value="sound">Sound</option><option value="visual-sound">Visual + sound</option></select>
+          <label class="toggle-line"><span><b>Beside copied text</b></span><input data-key="cursorFeedbackEnabled" class="toggle" type="checkbox"></label>
+          <label class="toggle-line"><span><b>Corner message</b><small>Fixed screen position</small></span><input data-key="screenFeedbackEnabled" class="toggle" type="checkbox"></label>
+          <label class="toggle-line"><span><b>Sound</b><small>Optional audio cue</small></span><input data-key="enableAudioNotification" class="toggle" type="checkbox"></label>
+        </div>
+      </div>
+
+      <div class="card effects-card">
+        <div class="card-headline"><div><h2>Selection feedback</h2><div class="tiny">Each effect has its own preset.<br>Customize or reset the selected effect below.</div></div><div class="actions"><button id="previewCursor" class="btn primary">▶ Preview</button></div></div>
+        <fieldset class="cursor-effect-grid"><legend class="sr-only">Selection effect</legend>
+          <label><input type="radio" name="cursorEffect" value="selection-flash"><span class="fx-preview flash">Aa</span><b>Flash</b><small>Recommended default</small></label>
+          <label><input type="radio" name="cursorEffect" value="selection-brackets"><span class="fx-preview brackets">[ ]</span><b>Brackets</b><small>Start + end</small></label>
+          <label><input type="radio" name="cursorEffect" value="soft-halo"><span class="fx-preview halo">◉</span><b>Soft halo</b><small>Subtle endpoint glow</small></label>
+
+          <label class="advanced-effect"><input type="radio" name="cursorEffect" value="pulse-ring"><span class="fx-preview ring">○</span><b>Pulse ring</b><small>Expanding endpoint</small></label>
+          <label><input type="radio" name="cursorEffect" value="ripple-check"><span class="fx-preview ring">✓</span><b>Ripple + check</b><small>Confirmed success</small></label>
+          <label class="advanced-effect"><input type="radio" name="cursorEffect" value="spark"><span class="fx-preview">✦</span><b>Spark</b><small>Quick sparkle</small></label>
+          <label class="advanced-effect"><input type="radio" name="cursorEffect" value="copy-badge"><span class="fx-preview">⧉</span><b>Copy badge</b><small>Copy symbol</small></label>
+
+          <label class="advanced-effect"><input type="radio" name="cursorEffect" value="dot-pulse"><span class="fx-preview">●</span><b>Dot pulse</b><small>Very subtle</small></label>
+          <label class="advanced-effect"><input type="radio" name="cursorEffect" value="mini-clipboard"><span class="fx-preview">▣</span><b>Mini clipboard</b><small>Clipboard pop</small></label>
+          <label class="advanced-effect"><input type="radio" name="cursorEffect" value="glow-trail"><span class="fx-preview halo">≈</span><b>Glow trail</b><small>Short motion cue</small></label>
+          <label><input type="radio" name="cursorEffect" value="underline-sweep"><span class="fx-preview underline">▔</span><b>Underline</b><small>A restrained line sweeps beneath the selection</small></label>
+          <label class="no-effect"><input type="radio" name="cursorEffect" value="none"><span class="fx-preview"></span><b>None</b><small>No selection effect</small></label>
+        </fieldset>
+        <p class="simple-effects-note">Slip into <a href="#" id="openAdvancedEffects">Advanced Mode</a>...<br>CopySelect keeps its fancy little levers there!</p>
+      </div>
+
+      <div class="card appearance-card advanced-only">
+        <div class="appearance-section">
+           <div class="card-headline"><h2>Corner message</h2><div class="actions"><label class="channel-toggle"><input data-key="screenFeedbackEnabled" class="toggle" type="checkbox" aria-label="Enable corner message"></label><button id="resetScreenAppearance" class="btn icon-btn" title="Restore corner-message preset" aria-label="Restore corner-message preset">↺</button></div></div>
+           <div class="appearance-grid corner-message-grid">
+             <div class="mini-field"><label>Content</label><select data-key="feedbackStyle" id="feedbackStyle" title="Message shows symbol and text; Symbol only hides the text"><option value="pill">Message</option><option value="icon">Symbol only</option></select></div>
+            <div class="mini-field symbol-field"><label>Symbol</label><div class="symbol-control-row"><div class="symbol-picker"><button id="feedbackSymbolButton" class="symbol-trigger" type="button" aria-haspopup="listbox" aria-controls="feedbackSymbolMenu" aria-expanded="false" aria-label="Choose corner message symbol"><span id="feedbackSymbolGlyph">✓</span><span class="symbol-chevron">⌄</span></button><div id="feedbackSymbolMenu" class="symbol-menu hidden" role="listbox" aria-label="Corner message symbol"></div><select data-key="feedbackSymbol" class="symbol-native" tabindex="-1" aria-hidden="true">
+              <option value="check">✓  Check</option><option value="none">None</option><option value="tick">✔  Bold check</option><option value="copy">⧉  Copy</option><option value="clipboard">▣  Clipboard</option><option value="sparkle">✦  Sparkle</option><option value="star">★  Star</option><option value="dot">●  Dot</option><option value="lightning">⚡  Lightning</option><option value="circle">◉  Circle</option><option value="arrow">➜  Arrow</option><option value="heart">♥  Heart</option><option value="diamond">◆  Diamond</option><option value="burst">✧  Burst</option><option value="square">■  Square</option><option value="custom">✎  Custom…</option>
+            </select></div><span class="custom-symbol-slot"><input data-key="feedbackCustomSymbol" class="custom-symbol-input" maxlength="4" aria-label="Custom symbol" title="Type one emoji or short symbol"></span></div></div>
+            <div class="mini-field"><label>Text</label><input data-key="feedbackText" type="text" maxlength="40" placeholder="Copied"></div>
+            <div class="mini-field color-field corner-text-color"><label>Text color</label><input data-key="notificationTextColor" type="color"></div>
+            <div class="mini-field color-field corner-bg-color"><label>Background</label><input data-key="notificationColor" type="color"></div>
+            <div class="mini-field"><label>Opacity</label><div class="range-with-value"><input data-key="notificationTransparency" type="range" min="10" max="100"><label class="range-value-editor"><input data-key="notificationTransparency" type="number" min="10" max="100" class="range-number"><span id="screenOpacityValue">%</span></label></div></div>
+            <div class="mini-field"><label>Size</label><div class="range-with-value"><input data-key="feedbackSize" type="range" min="10" max="96"><label class="range-value-editor"><input data-key="feedbackSize" type="number" min="10" max="96" class="range-number"><span id="feedbackSizeValue">px</span></label></div></div>
+            <div class="mini-field font-field"><label>Font</label><select data-key="notificationFontFamily"><option value="system-ui">System</option><option value="Arial, sans-serif">Arial</option><option value="Georgia, serif">Georgia</option><option value="ui-monospace, monospace">Mono</option></select></div>
+            <div class="mini-field font-style-field"><label>Style</label><div class="corner-text-style"><button id="cornerTextStyleButton" class="corner-style-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Choose text style"><span id="cornerTextStyleGlyph">&nbsp;</span><span class="symbol-chevron">⌄</span></button><div id="cornerTextStyleMenu" class="corner-style-menu hidden" role="menu"><button type="button" data-corner-style="normal" aria-label="No text style">&nbsp;</button><button type="button" data-corner-style="bold" aria-label="Bold">B</button><button type="button" data-corner-style="underline" aria-label="Underline">U</button><button type="button" data-corner-style="italic" aria-label="Italic">I</button></div></div><select data-key="notificationFontStyle" class="sr-only" aria-label="Text style"><option value="normal">No style</option><option value="bold">Bold</option><option value="underline">Underline</option><option value="italic">Italic</option></select></div>
+            <div class="mini-field"><label>Max width</label><div class="control-inline"><input data-key="notificationBoxSize" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" class="num-sm"><span class="unit">px</span></div></div>
+            <div class="mini-field corner-duration-field"><label>Duration</label><div class="control-inline"><input data-key="notificationDuration" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" class="num-sm"><span class="unit">ms</span></div></div>
+            <div class="mini-field corner-inline-preview"><label>Preview</label><div id="cornerInlinePreview"><span id="cornerInlineSymbol">✓</span><span id="cornerInlineText">Copied</span></div></div>
+          </div>
+        </div>
+
+        <div class="appearance-section selection-appearance">
+           <div class="card-headline"><h2>Customize selected effect</h2></div>
+           <div class="appearance-grid selection-grid">
+             <div class="mini-field color-field"><label>Effect color</label><input data-key="cursorEffectColor" type="color"></div>
+             <div class="mini-field color-field flash-only"><label>Flash text color <span class="help" tabindex="0" data-tip="Text color during the brief selection flash.">?</span></label><input data-key="selectionFlashTextColor" type="color"></div>
+             <div class="mini-field"><label>Opacity</label><div class="range-with-value"><input data-key="cursorEffectOpacity" type="range" min="10" max="100"><label class="range-value-editor"><input data-key="cursorEffectOpacity" type="number" min="10" max="100" class="range-number"><span id="cursorOpacityValue">%</span></label></div></div>
+             <div class="mini-field non-flash-only"><label id="cursorSizeLabel">Size</label><div class="range-with-value"><input data-key="cursorEffectSize" type="range" min="10" max="96"><label class="range-value-editor"><input data-key="cursorEffectSize" type="number" min="10" max="96" class="range-number"><span id="cursorSizeValue">px</span></label></div></div>
+             <div class="mini-field restore-effect-field"><label>Restore Effects</label><button id="resetSelectionAppearance" class="btn selection-restore-btn" title="Restore Effects" aria-label="Restore Effects"><span class="restore-effect-icon" aria-hidden="true">↺</span></button></div>
+             <div class="mini-field underline-only"><label>Thickness</label><div class="range-with-value"><input data-key="cursorEffectThickness" type="range" min="1" max="12"><label class="range-value-editor"><input data-key="cursorEffectThickness" type="number" min="1" max="12" class="range-number"><span>px</span></label></div></div>
+             <div class="mini-field"><label>Duration</label><div class="range-with-value"><input data-key="cursorFeedbackDuration" type="range" min="100" max="1200" step="20"><label class="range-value-editor"><input data-key="cursorFeedbackDuration" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" class="range-number four-digit-value"><span id="cursorDurationValue">ms</span></label></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feedback-right">
+      <div class="card preview-card">
+        <div class="card-headline"><div><h2>Live preview</h2></div><button id="previewFeedback" class="btn primary">▶ Preview</button></div>
+        <div id="previewStage" class="preview-stage">
+          <div class="preview-copy-line"><h3>CopySelect grows with the way you work</h3><p>Keep it effortless or make it wonderfully specific: CopySelect can format, collect, tag, and organize the useful bits you find!</p><p>When something is worth keeping, it's one step ahead:<br><span class="preview-selection-phrase"><span id="selectionPreview">just select the text and it’s copied</span></span>, and you decide what CopySelect should do with it! Add a quiet confirmation, send it to a Collection, or let WordWatch organize familiar topics automatically...</p><p>Simple when you want speed.<br>Advanced when you want a system.<br>Always local-first.</p></div>
+          <span id="previewBracketStart" class="preview-bracket" aria-hidden="true">[</span><span id="previewBracketEnd" class="preview-bracket" aria-hidden="true">]</span>
+          <div id="notifyPreview" class="preview"><span id="previewSymbol">✓</span><span id="previewText">Copied</span></div>
+          <div id="cursorPreview" class="cursor-preview"></div>
+        </div>
+        <div class="position-block">
+          <div class="mini-title">Screen position</div>
+          <div class="position-grid" role="radiogroup" aria-label="Corner message position">
+            <label title="Top left"><input type="radio" name="pos" value="top-left"><span></span></label><label title="Top center"><input type="radio" name="pos" value="top-center"><span></span></label><label title="Top right"><input type="radio" name="pos" value="top-right"><span></span></label>
+            <label title="Center left"><input type="radio" name="pos" value="center-left"><span></span></label><label title="Center"><input type="radio" name="pos" value="center-center"><span></span></label><label title="Center right"><input type="radio" name="pos" value="center-right"><span></span></label>
+            <label title="Bottom left"><input type="radio" name="pos" value="bottom-left"><span></span></label><label title="Bottom center"><input type="radio" name="pos" value="bottom-center"><span></span></label><label title="Bottom right"><input type="radio" name="pos" value="bottom-right"><span></span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="card sound-card">
+        <div class="card-headline"><h2>Confirmation sound</h2><label class="channel-toggle"><input data-key="enableAudioNotification" class="toggle" type="checkbox" aria-label="Enable confirmation sound"></label></div>
+        <div class="sound-line"><select id="audioNotificationSound" data-key="audioNotificationSound" aria-label="Confirmation sound"><option value="soft-beep">Soft beep</option><option value="glass-chime">Glass chime</option><option value="soft-tap">Soft tap</option><option value="ding">Ding</option><option value="drop">Water drop</option><option value="bell">Bell</option></select><button id="previewSound" class="btn">▶ Preview</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="page-sites">
+  <div class="card">
+    <div class="rule-grid">
+      <div class="field"><label>Site / domain pattern <span class="help" tabindex="0" data-tip="Match the site or URL this rule applies to.&#10;&#10;Simple patterns:&#10;example.com = exactly that domain&#10;*.example.com = any subdomain of that domain&#10;* = wildcard for any run of characters&#10;&#10;Regular expressions:&#10;Start with ^ to treat the full pattern as a regular expression.&#10;^https://docs\.example\.com/ = URLs beginning with that exact address&#10;\ escapes a regex special character: \. means a literal dot; \\ means a literal backslash.&#10;&#10;Use simple patterns unless you need regex precision. Rules are checked in priority order.&#10;&#10;More examples: About → FAQ → Site rules &amp; patterns.">?</span></label><input id="rulePattern" placeholder="example.com; *.example.com; ^https://docs.example.com/"></div>
+      <div class="field rule-behavior-field"><label>CopySelect</label><select id="ruleBehavior"><option value="enable">Always enable</option><option value="disable">Always disable</option></select></div>
+      <div class="field"><label>Copy mode</label><select id="ruleMode"><option value="">Inherit global</option><option value="plain">Plain Text</option><option value="original">Rich Text</option><option value="markdown">Markdown</option><option value="quote-source">Quote + source</option><option value="custom">Custom template</option></select></div>
+      <div class="field"><label>Content-editable</label><select id="ruleContentEditable"><option value="">Inherit global</option><option value="on">Allow</option><option value="off">Block</option></select></div>
+      <div class="field"><label>Form fields</label><select id="ruleTextBoxes"><option value="">Inherit global</option><option value="on">Allow</option><option value="off">Block</option></select></div>
+      <div class="field"><label>Middle-click paste</label><select id="rulePaste"><option value="">Inherit global</option><option value="on">On</option><option value="off">Off</option></select></div>
+      <div class="field"><label>Duplicate suppression</label><select id="ruleDuplicates"><option value="">Inherit global</option><option value="on">On</option><option value="off">Off</option></select></div>
+      <div class="field"><label>Save to History</label><select id="ruleSaveHistory"><option value="">Inherit global</option><option value="on">Save</option><option value="off">Do not save</option></select></div>
+      <div class="field"><label>Source details</label><select id="ruleSourceDetails"><option value="">Inherit global</option><option value="on">Save title, URL and time</option><option value="off">Do not save</option></select></div>
+      <div class="field"><label>Auto-add to Collection</label><select id="ruleAutoCollection"><option value="">Inherit global</option><option value="off">Do not auto-add</option><option value="collection">Add to collection</option></select><select id="ruleAutoCollectionTarget" disabled><option value="">Choose collection…</option></select></div>
+      <div class="field"><label>Selection trigger</label><select id="ruleSelectionTrigger"><option value="">Inherit global</option><option value="any">Any selection</option><option value="range">Drag selection</option><option value="word">Click selection</option></select></div>
+      <div class="field"><label>Selection effect</label><select id="ruleEffect"><option value="">Inherit global</option><option value="selection-flash">Flash</option><option value="selection-brackets">Brackets</option><option value="underline-sweep">Underline</option><option value="soft-halo">Soft halo</option><option value="pulse-ring">Pulse ring</option><option value="none">None</option></select></div>
+      <div class="field"><label>Screen feedback</label><select id="ruleFeedbackStyle"><option value="">Inherit global</option><option value="pill">Message</option><option value="icon">Symbol only</option></select></div>
+      <div class="field"><label>Show notification</label><select id="ruleScreenFeedback"><option value="">Inherit global</option><option value="on">Show</option><option value="off">Hide</option></select></div>
+      <div class="field"><label>Selection feedback</label><select id="ruleCursorFeedback"><option value="">Inherit global</option><option value="on">On</option><option value="off">Off</option></select></div>
+      <div class="field"><label>Notification duration</label><select id="ruleNotificationDurationMode"><option value="">Inherit global</option><option value="custom">Custom</option></select><div class="control-inline"><input id="ruleNotificationDuration" type="text" inputmode="numeric" maxlength="5" placeholder="1500" class="num-sm four-digit-value" disabled><span class="unit">ms</span></div></div>
+      <div class="field"><label>Copy sound</label><select id="ruleSound"><option value="">Inherit global</option><option value="none">None</option><option value="soft-beep">Soft beep</option><option value="glass-chime">Glass chime</option><option value="soft-tap">Soft tap</option><option value="ding">Ding</option><option value="drop">Water drop</option><option value="bell">Bell</option></select></div>
+      <div class="field"><label>Position override</label><select id="rulePosition"><option value="">Inherit global</option><option value="top-left">Top left</option><option value="top-center">Top center</option><option value="top-right">Top right</option><option value="center-left">Center left</option><option value="center-center">Center</option><option value="center-right">Center right</option><option value="bottom-left">Bottom left</option><option value="bottom-center">Bottom center</option><option value="bottom-right">Bottom right</option></select></div>
+      <div class="field"><label>Copy delay</label><select id="ruleDelay"><option value="">Inherit global</option><option value="on">On</option><option value="off">Off</option></select></div>
+      <div class="field"><label>Delay override</label><div class="control-inline"><input id="ruleDelayMs" type="number" min="0" max="10000" placeholder="450" class="num-sm"><span class="unit">ms</span></div></div>
+      <div class="field"><label>Minimum selection</label><select id="ruleMinMode"><option value="">Inherit global</option><option value="custom">Custom</option></select><div class="control-inline"><input id="ruleMinLength" type="number" min="1" placeholder="2" class="num-sm" disabled><span class="unit">chars</span></div></div>
+    </div>
+    <button id="addRule" class="btn primary" style="margin-top:8px">Add rule</button>
+    <div class="rule-list-head"><span>Rules</span><span class="tiny">Overrides summarized below.</span></div>
+    <div id="rulesBody" class="rule-cards"></div>
+  </div>
+</section>
+
+<section class="page" id="page-profiles">
+  <div class="card"><h2>Workflow profiles</h2><p class="tiny">Save a complete CopySelect setup for different tasks, then switch between them in one click.</p><div class="profile-picker-row"><div class="field"><label>Active profile</label><select id="profileSelect"></select></div><button id="profileDescriptionsToggle" class="btn" type="button" aria-expanded="false" aria-controls="profileExplainer">Preset profiles explained ▾</button></div><div id="profileExplainer" class="profile-explainer hidden">
+    <div><b>Batch Transfer</b><span><strong>Copy</strong> clean plain text · <strong>Organize</strong> auto-add to Paste Stack · <strong>Feedback</strong> minimal · <strong>Timing</strong> 250 ms<br><em>Collect values and paste them sequentially elsewhere.</em></span></div>
+    <div><b>Coding</b><span><strong>Copy</strong> preserve whitespace · <strong>Organize</strong> Code Collection when present · <strong>Feedback</strong> selection only · <strong>Timing</strong> 250 ms<br><em>Code, terminals, issues, docs, and prompts.</em></span></div>
+    <div><b>Default</b><span><strong>Copy</strong> Plain text / normal cleanup · <strong>Organize</strong> History · <strong>Feedback</strong> standard · <strong>Timing</strong> 450 ms<br><em>Balanced everyday copying.</em></span></div>
+    <div><b>Minimal</b><span><strong>Copy</strong> plain text · <strong>Organize</strong> History · <strong>Feedback</strong> none · <strong>Timing</strong> 350 ms<br><em>Distraction-free copying.</em></span></div>
+    <div><b>Private Capture</b><span><strong>Copy</strong> no source metadata · <strong>Organize</strong> locked Private Collection when present · <strong>Feedback</strong> no content preview<br><em>Capture personal or confidential material discreetly.</em></span></div>
+    <div><b>Rapid Capture</b><span><strong>Copy</strong> plain text · <strong>Organize</strong> History + auto-pin · <strong>Feedback</strong> brief flash · <strong>Timing</strong> 200 ms<br><em>Keep a small set of important snippets close at hand.</em></span></div>
+    <div><b>Recipes</b><span><strong>Copy</strong> preserve useful formatting · <strong>Organize</strong> Recipes Collection when present · <strong>WordWatch</strong> recipe structure + measurements · <strong>Timing</strong> 400 ms<br><em>Shows how WordWatch can recognize and route recipe-like text.</em></span></div>
+    <div><b>Research</b><span><strong>Copy</strong> Quote + Source · <strong>Organize</strong> Research Collection when present · <strong>Feedback</strong> subtle · <strong>Timing</strong> 600 ms<br><em>Traceable quotations, evidence, and reading notes.</em></span></div>
+    <div><b>Writing</b><span><strong>Copy</strong> clean plain text · <strong>Organize</strong> History · <strong>Feedback</strong> quiet · <strong>Timing</strong> 400 ms<br><em>Move prose without webpage formatting clutter.</em></span></div>
+  </div><div id="profileList" style="margin-top:8px"></div></div>
+  <div class="card"><h2>Custom profile</h2><p class="tiny">Create a new profile from your current settings, or update the active profile.</p><input id="newProfile" placeholder="New profile name" class="full"><div class="actions profile-save-actions"><button id="addProfile" class="btn primary">Create from current settings</button><button id="saveProfile" class="btn">Update active profile</button></div></div>
+</section>
+
+<section class="page" id="page-history">
+  <aside class="history-simple-default-note"><strong>CopySelect remembers so you don’t have to.</strong><br>Choose how your history looks and what stays within easy reach. <a href="#" id="openAdvancedHistory">Advanced mode</a> lets you fine-tune what gets captured.</aside>
+  <div class="card history-storage-card">
+    <div class="history-section-heading"><span class="history-heading-icon">▣</span><div><h2>Clipboard Storage Settings</h2><p>Choose what gets saved and how long it stays.</p></div></div>
+    <section class="history-retention-panel"><div class="history-panel-title"><span>▤</span><div><h3>Storage &amp; retention</h3></div></div><div class="history-capture-grid">
+      <div class="history-subcard"><h4><svg class="storage-section-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4.5V3h6v1.5M9 9h6M9 13h6"/></svg><span>Capture</span></h4>
+        <label class="history-setting"><span><b>Save CopySelect copies to History</b><small>Save automatic CopySelect copies in local History on this device.</small></span><input data-key="historyEnabled" class="toggle" type="checkbox"></label>
+        <label class="history-setting history-setting-child history-setting-browser"><span><b>Also save normal browser copies</b><small>Include copies made with Ctrl+C or the browser’s Copy command.</small></span><input data-key="captureManualChromeCopies" class="toggle" type="checkbox"></label>
+        <label class="history-setting"><span><b>Save source details</b><small>Store the page title, URL, and copy time.</small></span><input data-key="historyCaptureSourceDetails" class="toggle" type="checkbox"></label>
+        <label class="history-setting"><span><b>Save rich text</b><small>Preserve formatting when available.</small></span><input data-key="historySaveRichText" class="toggle" type="checkbox"></label>
+        <label class="history-setting history-setting-child history-setting-images"><span><b>Save images</b><small>Allow images embedded in saved rich text.</small></span><input data-key="historySaveImages" class="toggle" type="checkbox"></label>
+        <label class="history-setting history-setting-privacy"><span><svg class="capture-privacy-shield" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.7-2.9 8-7 10-4.1-2-7-5.3-7-10V6l7-3Z"/><path d="m9.5 12 1.6 1.6 3.5-4"/></svg><b>Exclude sensitive fields</b><small>Don’t save copies from password or payment-card fields.</small></span><input data-key="historyIgnoreSensitiveFields" class="toggle" type="checkbox"></label>
+      </div>
+      <div class="history-subcard"><h4><svg class="storage-section-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg><span>Retention</span></h4>
+        <label class="history-limit"><b>History limit</b><input id="historyRetentionValue" data-key="historyLimit" class="num-sm" type="number" min="1" max="10000"><select disabled><option>entries</option></select></label>
+        <label class="history-setting history-auto-delete"><span><b>Maximum age</b><small>Automatically remove entries older than this limit.</small></span><input data-key="historyAutoDelete" class="toggle" type="checkbox"></label>
+        <label class="history-limit history-auto-delete-controls history-limit-child"><b>Delete after</b><input id="historyAutoDeleteValue" class="num-sm" type="number" min="1" max="10000"><select id="historyAutoDeleteUnit"><option value="days">days</option><option value="hours">hours</option></select></label>
+        <label class="history-limit"><b>Always retain at least</b><input data-key="historyMinimumKeep" class="num-sm" type="number" min="0" max="10000"><select disabled><option>entries</option></select></label>
+        <p class="history-retention-summary"></p>
+        <div class="history-setting pinned-protection-note"><span class="pinned-protection-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path class="shield-outline" d="M12 2.7 20 6v5.3c0 5-3.1 8.6-8 10.9-4.9-2.3-8-5.9-8-10.9V6l8-3.3Z"/><path class="pin-inside" d="M9 6.5h6l-1 4 2.2 2.2v1.3H13v4.2l-1 1.4-1-1.4V14H7.8v-1.3L10 10.5l-1-4Z"/></svg></span><span><b>Pinned items are ALWAYS protected!</b><small>Your keepers stay put—CopySelect never tidies away anything you’ve pinned.</small></span></div>
+      </div>
+      <div class="history-subcard history-cleanup"><h4><svg class="storage-section-icon storage-trash-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8v10M12 8v10M16 8v10M5 6h14M9 4h6l1 2H8l1-2ZM7 6l1 15h8l1-15"/></svg><span>Cleanup</span></h4><p>Remove unpinned items from History.</p><button id="clearHistory" class="btn danger" aria-label="Clear unpinned history"><strong><span>Clear</span><span>History</span></strong><em aria-hidden="true">unpinned!</em></button><small>Only saved, unpinned items are removed. Pinned items stay put.</small></div>
+    </div></section>
+  </div>
+  <div class="card history-shell history-items-shell">
+    <div class="history-section-heading history-items-heading"><div><h2>History items</h2><p>Review, copy, pin and manage your clipboard history.</p></div><div class="history-search-row"><div class="history-search-field"><span class="help" tabindex="0" aria-label="Advanced clip search help" data-tip='Words use fuzzy matching.
+Use "quotes" for an exact phrase.
+
+Operators:
+* wildcard
++term required
+-term excluded
+AND · OR · NOT · ( )
+
+Filters:
+site: · tag: · collection: · title: · url:
+today · pinned · formatted · images · repeated' >?</span><span class="history-search-icon" aria-hidden="true">⌕</span><input id="historySearch" type="search" placeholder="Search clips…" aria-label="Search clips"><button id="clearHistorySearch" class="history-search-clear hidden" type="button" aria-label="Clear clip search" title="Clear search">×</button></div><select id="historyFilter" aria-label="Collection"><option value="all">All</option></select><select id="historySort" aria-label="Sort history"><option value="newest">Newest</option><option value="oldest">Oldest</option><option value="longest">Longest</option></select><button id="historyFiltersToggle" class="btn history-filters-toggle" type="button" aria-expanded="false" aria-controls="findSenseFilters"><span>Filters</span><span id="historyFiltersCaret" class="history-filters-caret" aria-hidden="true">▾</span></button><button id="historyHardRefresh" class="btn icon-btn history-hard-refresh" type="button" title="Refresh organization" aria-label="Refresh organization">↻</button></div></div>
+    <div id="findSenseFilters" class="findsense-filters hidden" aria-label="History filters">
+      <div class="findsense-filter-fields">
+        <label><span>Site</span><input id="findSenseSite" type="text" placeholder="*.example.com"></label>
+        <label><span>Date</span><select id="findSenseDate"><option value="">Any date</option><option value="today">Today</option></select></label>
+        <label><span>Type</span><select id="findSenseType"><option value="">Any type</option><option value="formatted">Formatted</option><option value="images">Images</option><option value="repeated">Repeated</option></select></label>
+        <label class="findsense-toggle-line"><span>Pinned only</span><input id="findSensePinned" class="toggle" type="checkbox" aria-label="Pinned only"></label>
+      </div>
+      <div class="findsense-filter-actions"><button type="button" class="btn" id="saveCurrentView">Save view…</button><button type="button" class="btn primary" id="findSenseApply">Apply filters</button></div>
+    </div>
+    <div class="history-items-toolbar"><div class="history-toolbar-group history-actions-group"><span class="toolbar-group-label">Actions</span><div class="history-selection-menu"><button id="historySelectionToggle" class="btn history-select-items" type="button" aria-haspopup="menu" aria-controls="historySelectionActions" aria-expanded="false"><svg class="history-select-items-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="1.5"/><path d="m7.5 12 3 3 6-7"/></svg><span>Select items</span><span id="historySelectedCount" class="history-selected-count" aria-label="Selected items">0</span><span class="history-control-chevron" aria-hidden="true"></span></button><div id="historySelectionActions" class="history-selection-actions hidden" role="menu"><button data-history-action="pin"><img class="history-action-icon" src="assets/icons/pin-angled.svg" alt="">Pin selected</button><button data-history-action="tags-add">＋ &nbsp; Add tags…</button><button data-history-action="tags-remove">− &nbsp; Remove tags…</button><button data-history-action="tags-suggest">✦ &nbsp; Find possible tags</button><button data-history-action="wordwatch-teach"><svg class="ui-icon wordwatch-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 13.5 7l3.5 1.5-3.5 1.5-1.5 3.5-1.5-3.5L7 8.5 10.5 7 12 3.5Z"/><path d="M5 15.5h14M7 19h10"/></svg><span>Teach WordWatch</span></button><button data-history-action="collection">▢ &nbsp; Add to collection…</button><button data-history-action="export">⇩ &nbsp; Export selected</button><button data-history-action="copy">▣ &nbsp; Copy selected</button><button data-history-action="paste-stack">⇥ &nbsp; Add to Paste Stack</button><button data-history-action="delete" class="danger">♲ &nbsp; Delete selected…</button></div></div><div class="history-collections"><button id="historyCollectionsToggle" class="btn" type="button" aria-haspopup="menu" aria-controls="historyCollectionsMenu" aria-expanded="false">▢ &nbsp; Collections ⌄</button><div id="historyCollectionsMenu" class="history-collections-menu hidden" role="menu"><button data-collection="all">All items</button><div id="historyCollectionsList" role="group" aria-label="Collections"></div><button id="newHistoryCollection">＋ New collection</button></div></div><div class="paste-stack-menu"><button id="pasteStackToggle" class="btn" type="button" aria-haspopup="menu" aria-controls="pasteStackMenu" aria-expanded="false">⇥ &nbsp; Paste Stack (<span id="pasteStackCount">0</span>)⌄</button><div id="pasteStackMenu" class="paste-stack-popover hidden" role="menu"><div id="pasteStackPreview" class="paste-stack-preview" role="note">Stack is empty.</div><button id="pasteStackNext" type="button">Copy next &amp; advance</button><button id="pasteStackClear" type="button" class="danger">Clear stack</button></div></div></div><div class="history-toolbar-group history-view-group"><span class="toolbar-group-label">History</span><div class="history-tabs" role="tablist"><button id="historyTabRecent" class="chip active" type="button" role="tab" aria-selected="true" aria-controls="historyRecentPane" tabindex="0">Recent</button><button id="historyTabPinned" class="chip" type="button" role="tab" aria-selected="false" aria-controls="historyPinnedPane" tabindex="-1">Pinned <span id="pinnedCount">0</span></button></div></div><div class="history-toolbar-group history-display-group"><span class="toolbar-group-label">View</span><div class="history-display-controls"><label>Metadata <input id="toggleHistoryMetadata" class="toggle" type="checkbox"></label><div class="history-view-toggle" role="group" aria-label="History density"><button id="historyCompact" class="chip active" type="button" aria-pressed="true">Compact</button><button id="historyFull" class="chip" type="button" aria-pressed="false">Expanded</button></div><label>Auto-expand <input id="historyHoverExpand" class="toggle" type="checkbox"></label><label class="history-hover-delay">Delay <input id="historyHoverDelay" data-key="historyHoverDelay" class="num-sm four-digit-value" type="number" min="0" max="9999" step="50" inputmode="numeric" aria-label="Auto-expand delay in milliseconds"><span class="unit">ms</span></label></div></div></div>
+    <div id="historyRecentPane" role="tabpanel" aria-labelledby="historyTabRecent"><div id="historyList" class="history-list"></div></div><div id="historyPinnedPane" class="hidden" role="tabpanel" aria-labelledby="historyTabPinned"><div id="pinnedList" class="history-list"></div></div>
+    <div class="history-footer"><span id="historySelectedFooter">No items selected</span><span id="historyActionStatus" class="action-status" role="status"></span><button id="exportVisibleHistory" class="btn">Export shown items</button></div>
+  </div>
+</section>
+
+<section class="page" id="page-collections">
+  <div class="card organization-hub">
+    <div class="organization-head"><div><h2>Collections</h2><p class="tiny">Use Collections for projects and archives. Tags describe clips, Saved Views find dynamic subsets, and WordWatch automates organization and actions.</p></div><div class="actions"><span id="wordWatchActiveCount" class="organization-status">WordWatch · 0 active</span><button id="organizationHardRefresh" class="btn" type="button">↻ Refresh</button><button id="newCollectionFromHub" class="btn primary" type="button">＋ New Collection</button></div></div>
+    <div class="organization-tabs" role="tablist"><button class="chip active" id="orgTabCollections" data-org-tab="collections" type="button" role="tab" aria-selected="true">Collections</button><button class="chip" id="orgTabTags" data-org-tab="tags" type="button" role="tab" aria-selected="false">Tags</button><button class="chip" id="orgTabViews" data-org-tab="views" type="button" role="tab" aria-selected="false">Saved Views</button></div>
+    <section id="orgCollectionsPane" class="organization-pane"><div id="collectionsGrid" class="collections-grid"></div></section>
+    <section id="orgTagsPane" class="organization-pane hidden"><div class="tag-settings-row"><label>Automatic tag suggestions <select id="smartTagSuggestionMode"><option value="off">Off</option><option value="suggest">Suggest only</option><option value="auto">Auto-apply high confidence</option></select></label><label>High confidence <span class="control-inline"><input id="smartTagAutoThreshold" type="number" min="50" max="99" class="num-sm"><span class="unit">%</span></span></label><label><input id="smartTagLearningEnabled" class="toggle" type="checkbox"> Learn from my tag choices</label></div><p class="tiny organization-note">Tags start gray with × when they are not saved. Click a tag to save it; click it again to return it to gray ×. Changes refresh relevant views automatically.</p><div id="tagsBrowser" class="tags-browser"></div></section>
+    <section id="orgViewsPane" class="organization-pane hidden"><div class="saved-view-head"><p class="tiny">Saved Views are reusable Advanced Searches. They refresh automatically as tags and Collection membership change, and can also be hard-refreshed.</p><button id="newSavedView" class="btn" type="button">＋ Save current History search</button></div><div id="savedViewsList" class="saved-views-list"></div></section>
+    <div id="organizationRefreshStatus" class="action-status" role="status" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="page" id="page-shortcuts">
+  <div class="card settings-card voice-card"><div class="card-headline"><div><h2>Read aloud</h2><div class="tiny">Speak the current selection or most recent copied item.</div></div><label class="voice-master-toggle"><input data-key="enableTTSHotkey" class="toggle" type="checkbox" aria-label="Turn Read aloud on or off"></label></div><div class="voice-settings-grid">
+    <div class="row"><div class="meta"><b>Hotkey</b></div><div class="control"><select data-key="ttsModifierKey"><option>CTRL</option><option>ALT</option><option>SHIFT</option></select><input data-key="ttsKey" maxlength="1" class="key-input"></div></div>
+    <div class="row"><div class="meta"><b>Voice</b><small>Choose an installed Windows/Chrome voice.</small></div><div class="control"><select id="ttsVoice" data-key="ttsVoice"><option value="">System default</option></select><button id="refreshVoices" class="btn" type="button" title="Refresh voice list">↻</button><button id="previewVoice" class="btn">▶ Preview</button></div></div>
+    <div class="row voice-range-row"><div class="meta"><b>Speech rate</b><small>0.5 is slower;<br>2 is faster</small></div><div class="control voice-range-control"><input data-key="ttsRate" type="range" step=".1" min=".5" max="2" aria-label="Speech rate slider"><input data-key="ttsRate" type="number" step=".1" min=".5" max="2" class="num-sm" aria-label="Speech rate value"><span class="voice-range-text">0.5–2×</span></div></div>
+    <div class="row voice-range-row"><div class="meta"><b>Pitch</b><small>0 is lowest;<br>2 is highest</small></div><div class="control voice-range-control"><input data-key="ttsPitch" type="range" step=".1" min="0" max="2" aria-label="Pitch slider"><input data-key="ttsPitch" type="number" step=".1" min="0" max="2" class="num-sm" aria-label="Pitch value"><span class="voice-range-text">0–2</span></div></div>
+    <div class="row voice-range-row"><div class="meta"><b>Volume</b><small>0 is muted;<br>1 is full volume</small></div><div class="control voice-range-control"><input data-key="ttsVolume" type="range" step=".05" min="0" max="1" aria-label="Volume slider"><input data-key="ttsVolume" type="number" step=".05" min="0" max="1" class="num-sm" aria-label="Volume value"><span class="voice-range-text">0–1</span></div></div>
+    </div></div><aside class="voice-help"><b>Want a more natural sounding voice?</b><p>CopySelect uses voices Chrome receives from Windows. Try the free <a href="https://support.microsoft.com/windows/change-your-keyboard-layout-245c49b8-f856-7fd7-2cf5-41e54c66f5b3" target="_blank" rel="noreferrer">Windows language and speech packs</a> or install a free SAPI 5 voice from <a href="https://rhvoice.org/installation/" target="_blank" rel="noreferrer">RHVoice</a>, restart Chrome, then choose it here.</p><p><a href="https://github.com/rhasspy/piper/releases" target="_blank" rel="noreferrer">Piper</a> and <a href="https://github.com/espeak-ng/espeak-ng/releases" target="_blank" rel="noreferrer">eSpeak NG</a> are free, but need separate companion integration that CopySelect does not include yet.</p></aside>
+</section>
+
+<section class="page" id="page-backup">
+  <div class="backup-grid"><section class="card backup-primary"><h2>Export</h2><p class="tiny">Save a portable CopySelect backup as JSON.</p><div class="backup-actions"><button id="exportBtn" class="backup-choice"><b>Everything</b><span>Settings and History</span></button><button id="exportSettingsBtn" class="backup-choice"><b>Settings</b><span>Preferences, profiles, and Site Rules</span></button><button id="exportHistoryBtn" class="backup-choice"><b>History</b><span>Recent and pinned entries, including metadata</span></button></div></section><section class="card backup-restore"><h2>Restore</h2><p class="tiny">Restore CopySelect from a JSON backup.</p><button id="importBtn" class="btn">Choose backup file…</button><input id="importFile" type="file" accept=".json" class="hidden"></section><section class="card danger-zone backup-reset"><h2>Reset</h2><p class="tiny">Erase all settings, profiles, Site Rules, and local History from this browser.</p><button id="resetBtn" class="btn danger">Reset all data</button></section></div>
+</section>
+
+<section class="page" id="page-advanced">
+  <div class="advanced-grid">
+    <div class="card settings-card activity-card"><h2>Activity</h2>
+      <div class="usage-layout"><div class="meta"><div class="usage-heading"><b>Local usage counters</b><label class="usage-toggle"><span class="usage-toggle-state">On</span><input data-key="statsEnabled" class="toggle" type="checkbox" aria-label="Enable local usage counters"></label></div><small>All-time activity counts copies recorded by CopySelect, including optional normal browser copies. Saved-in-History totals change as you delete items or retention clears them.</small><button id="resetStats" class="btn">Reset counters</button></div><div id="usageStats" class="usage-stats"><section class="usage-group"><h3>All-time activity</h3><dl><div><dt>Copies</dt><dd>0</dd></div><div><dt>Characters</dt><dd>0</dd></div><div><dt>This week</dt><dd>0</dd></div></dl></section><section class="usage-group"><h3>Saved in History</h3><dl><div><dt>Saved items</dt><dd>0</dd></div><div><dt>Words</dt><dd>0</dd></div><div><dt>Sites</dt><dd>0</dd></div></dl></section></div></div>
+    </div>
+    <div class="advanced-right-stack">
+      <section class="card advanced-tools"><h2>Data behavior</h2><div class="helper-list"><div><b>Local storage</b><small>History, pins, Paste Stack, profiles, and settings stay in Chrome extension storage on this device.</small></div><div><b>No clipboard analytics</b><small>CopySelect does not upload copied text or activity counters.</small></div><div><b>History can pause independently</b><small>Temporarily stop saving history from the flyout without disabling automatic copying.</small></div></div></section>
+      <aside class="card privacy-card"><h2>Private by design</h2><p>Copied text and usage totals all stay locally on this device. CopySelect sends no analytics or clipboard content to a server.</p><div class="privacy-mark">Local-first</div></aside>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="page-about">
+  <div class="about-layout">
+    <div class="card about-product"><div class="about-brand"><img src="icon_48.png" alt="CopySelect"><div><h2>COPYS<span class="brand-slash">/</span>LECT</h2><p class="about-tagline"><span>Select.</span> <span>Copied.</span> <span>Done.</span></p></div></div><p>Fast automatic copying with clear confirmation, flexible formatting, per-site control and private local history.</p><h3>Changelog <small class="changelog-version">v3.7</small></h3><ul class="changelog-short"><li>Smarter keyboard and Shift+click selection timing prevents accidental copies while editing</li><li>History search now supports fuzzy terms, quotes, wildcards, +required, -excluded, and Boolean logic consistently</li><li>History rich-text previews automatically correct low-contrast text without changing the saved clip</li><li>History timeline, storage, Collections, Copy Confirmation, and release-candidate polish received a final regression pass</li></ul><button id="openChangelog" class="changelog-link" type="button">Read the complete changelog…</button><p class="tiny photo-credit">Credit: Clover photograph — <a href="https://www.pickpik.com/four-leaf-clover-clover-nature-leafed-leaf-four-leafed-123454" target="_blank" rel="noreferrer">PickPik</a></p></div>
+    <div class="about-egg-zone about-hero"><button id="easterEgg" class="btn egg-button">Do not CopySelect this button</button><div id="eggScene" class="egg-scene" aria-live="polite"></div></div>
+    <div class="card about-safeguards"><h2>Reliability & safeguards</h2><div class="helper-list"><div><b>Tuned effect defaults</b><small>Each selection effect begins with its own tested color, size, and timing.</small></div><div><b>Readable history</b><small>Character counts, source context, timeline groups, and full expansion make old copies easier to identify.</small></div><div><b>Verified success</b><small>Confirmation appears only after the clipboard write succeeds.</small></div><div><b>Safe extension updates</b><small>Pages running an older content script request a refresh instead of throwing repeated errors.</small></div></div></div>
+    <div class="card about-faq"><div class="about-faq-head"><div><h2>FAQ</h2><p class="about-faq-intro">The useful questions. Including a few you may not know you have yet.</p></div><div class="about-faq-actions" role="group" aria-label="FAQ sections"><button id="faqToggleAll" class="btn faq-toggle-all" type="button" data-state="expand" title="Expand all FAQ categories" aria-label="Expand all FAQ categories"><span class="faq-lines-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="faq-toggle-text">Expand all</span></button></div></div>
+      <details open><summary>Getting started</summary><p class="faq-category-note">The part where everything is still theoretically simple.</p><ol>
+        <li><b>What does CopySelect actually do?</b><p>When Automatic copying is on, selecting text can put it on your clipboard without Ctrl+C. Confirmation, History, formatting, and organization are separate, so you can use as much or as little of CopySelect as you want.</p></li>
+        <li><b>Do I have to organize anything before using it?</b><p>No. CopySelect is perfectly happy being useful before you’ve organized your life. <b>CopySelect starts useful immediately. The more you organize, the better WordWatch understands how you organize.</b></p></li>
+        <li><b>Why the delay? Isn’t the point to be fast?</b><p>Usually, yes. Local processing generally needs only about <b>100–150 ms</b>. A longer Copy Delay is mostly there for the half-second in which you realize you selected three words too many. Open <a href="#" data-faq-page="general">Automatic copying</a>.</p></li>
+        <li><b>Why can keyboard selection behave differently in an editable field?</b><p>Because Shift-selection often means “I’m about to replace this,” not “please copy this.” CopySelect waits for Shift to be released and gives editable fields a little more grace.</p></li>
+        <li><b>Why didn’t CopySelect copy something I selected?</b><p>Check the master switch, the current Site Rule, minimum-selection settings, modifier requirements, and editable-field safeguards. A selection that disappears or changes before the delay finishes is also deliberately ignored.</p></li>
+        <li><b>I returned to a page and the old selection was still highlighted. Why didn’t it copy again?</b><p>Because it already happened. CopySelect has been instructed not to mistake déjà vu for productivity. Only a genuinely new or changed selection should trigger another automatic copy.</p></li>
+      </ol></details>
+      <details><summary>Copying, formatting &amp; templates</summary><p class="faq-category-note">What actually lands on the clipboard, and why.</p><ol start="7">
+        <li><b>What is the difference between Plain Text and Rich Text?</b><p><b>Plain Text</b> keeps the words. <b>Rich Text</b> can preserve compatible formatting such as emphasis, links, lists, and structure from the source.</p></li>
+        <li><b>What is a template for?</b><p>It’s the recipe for what lands on your clipboard. <code>{text}</code> is the main ingredient; title, URL, date, time, counts, and your own wording are garnish, provenance, or paperwork. Open <a href="#" data-faq-page="metadata">Metadata &amp; Templates</a>.</p></li>
+        <li><b>If my template contains only <code>{text}</code>, will it add anything else?</b><p>Not because of the template. Appended metadata is controlled separately. A <code>{text}</code>-only template should contribute only the selected text when that template is the active copy format.</p></li>
+        <li><b>What are “Chars (spaces)” and “Chars (no spaces)”?</b><p>The first counts every character, including whitespace. The second ignores whitespace. Useful for strict limits and for discovering that apparently innocent spaces have been living rent-free in your count.</p></li>
+        <li><b>Does changing the copy format change what is stored in History?</b><p>Not necessarily. Clipboard output and History storage are separate. You can preserve richer source information in History while copying a simpler version.</p></li>
+        <li><b>What does “Copy as” do in History?</b><p>It takes an existing clip and puts it back on the clipboard in another supported format, such as Plain Text, Rich Text, a reference format, or your custom template when the required source data exists.</p></li>
+        <li><b>What does Ctrl+Shift+V do?</b><p>For a CopySelect-produced clipboard entry, it can paste the original selected text without CopySelect’s surrounding metadata or rich formatting. Clipboard content from elsewhere is left alone.</p></li>
+      </ol></details>
+      <details><summary>Clipboard History</summary><p class="faq-category-note">Where past copying decisions come to live.</p><ol start="14">
+        <li><b>What does the Metadata switch do?</b><p>It controls whether History shows source and clip details such as domain, exact time, counts, and related information. It changes the <b>display</b>, not the clip itself.</p></li>
+        <li><b>Why do some snippets have Expand/Compress controls and others do not?</b><p>Those controls appear only when the snippet content has something to expand. Metadata does not make a short clip expandable simply by existing nearby.</p></li>
+        <li><b>Why are some timeline times missing?</b><p>They aren’t missing. CopySelect just declines to say <code>~1 hr ago</code> eight times in a row. The timeline marks the first clip in a useful time group and becomes more granular only when a section gets crowded.</p></li>
+        <li><b>How does the timeline decide what to show?</b><p>Very recent clips can use minute labels. Then it settles into 15-minute and hour-scale groups. Dense hour groups can split into 15-minute intervals. Older clips use <b>Today</b>, <b>Yesterday</b>, or the date with a quarter-hour time beneath it.</p></li>
+        <li><b>Can I see the exact time?</b><p>Yes. The exact timestamp stays with the clip’s metadata. The timeline is for orientation rather than repeating a stopwatch beside every item.</p></li>
+        <li><b>What happens when History gets enormous?</b><p>CopySelect loads it in batches rather than dramatically dumping your entire clipboard biography onto the page at once. More entries load as you approach the end.</p></li>
+        <li><b>What does Pin do?</b><p>It tells CopySelect, “No, this one actually matters.” Pinned clips can be protected from routine automatic cleanup.</p></li>
+        <li><b>What does “Select unorganized” mean?</b><p>It selects visible clips that have not yet acquired useful organization, so you can review them together rather than hunt individually.</p></li>
+        <li><b>Can I keep automatic copying but stop saving History?</b><p>Yes. Automatic copying and local History are independent. Open <a href="#" data-faq-page="storage">Clipboard Storage Settings</a>.</p></li>
+      </ol></details>
+      <details><summary>Privacy, storage &amp; backups</summary><p class="faq-category-note">Mostly local. Deliberately uneventful.</p><ol start="23">
+        <li><b>Where is my History stored?</b><p>Locally in the browser extension’s storage on this device. Normal CopySelect operation does not require sending your clipboard History to an analytics server.</p></li>
+        <li><b>What does automatic cleanup remove?</b><p>Items that meet your retention rules, with protections such as minimum keep and pinned-item handling applied according to your settings.</p></li>
+        <li><b>What happens to pinned items during cleanup?</b><p>They stay pinned. Automatic cleanup is aimed at <b>older, unpinned items</b>.</p></li>
+        <li><b>Can I back up my History?</b><p>Manual export is available in Data &amp; Backup. Automatic rotating local History backups are planned separately. Open <a href="#" data-faq-page="backup">Data &amp; Backup</a>.</p></li>
+        <li><b>Why keep source information at all?</b><p>When enabled, it lets you tell where something came from later instead of staring at a paragraph and hoping for a revelation.</p></li>
+      </ol></details>
+      <details><summary>Tags, Collections &amp; Saved Views</summary><p class="faq-category-note">Three ways of organizing things. Similar enough to require this section.</p><ol start="28">
+        <li><b>What is the difference between a tag, a Collection, and a Saved View?</b><p>A <b>tag</b> describes a clip. A <b>Collection</b> says the clip belongs to something. A <b>Saved View</b> is a reusable search that finds clips meeting conditions. They overlap in usefulness, but they are not the same thing.</p></li>
+        <li><b>Can a clip have several tags?</b><p>Yes.</p></li>
+        <li><b>Can a clip belong to more than one Collection?</b><p>Yes. CopySelect does not believe every object must choose one drawer and live there forever.</p></li>
+        <li><b>Does a clip need tags before it can belong to a Collection?</b><p>No. Collection membership is separate from ordinary tags.</p></li>
+        <li><b>If I remove a tag, does the clip leave its Collection?</b><p>No. Changing a tag does not silently alter Collection membership.</p></li>
+        <li><b>What exactly is a Saved View?</b><p>A search you liked enough to keep. It does not move or duplicate anything; it just knows where to look.</p></li>
+        <li><b>Why did a Saved View change by itself?</b><p>Because the data it searches changed. Saved Views are live queries, not frozen folders.</p></li>
+      </ol></details>
+      <details><summary>WordWatch</summary><p class="faq-category-note">Rules, automation, and the gradual delegation of minor decisions.</p><ol start="35">
+        <li><b>What exactly is WordWatch watching?</b><p>Your new clips, against rules you’ve given it. Not you. That would be a different product.</p></li>
+        <li><b>What is the difference between Quick Setup and WordWatch Studio?</b><p>Quick Setup handles common matching without much ceremony. Studio exposes the full rule structure, exclusions, concepts, testing, and actions.</p></li>
+        <li><b>Why “Any of these”?</b><p>Because one is enough. Terms inside that group use <b>OR</b> logic. If any one matches, the group passes.</p></li>
+        <li><b>Where does AND come in?</b><p>An <b>AND any of these</b> group adds another condition that must also match. OR happens inside each group; AND connects the groups.</p></li>
+        <li><b>What does “When matched” mean?</b><p>Those are the actions WordWatch performs after the rule succeeds, such as adding the clip to the Collection, pinning it, adding tags, or putting it in Paste Stack.</p></li>
+        <li><b>Are Suggested tags real tags?</b><p>Not yet. WordWatch has an opinion. You still get a vote.</p></li>
+        <li><b>What happens when I change tags?</b><p>Relevant organization is recomputed in the background. The manual Refresh action is there when you want CopySelect to reconsider its organizational decisions from scratch. Occasionally healthy for software too. Open <a href="#" data-faq-page="collections">Collections</a>.</p></li>
+        <li><b>What is a Locked Collection?</b><p>A Collection whose clips stay out of ordinary History, search, previews, and exports until you unlock it.</p></li>
+      </ol></details>
+      <details><summary>Site Rules &amp; patterns</summary><p class="faq-category-note">Because sometimes one website needs special treatment.</p><ol start="43">
+        <li><b>What does “Inherit global” mean?</b><p>This Site Rule does not override that setting. CopySelect uses your normal global value instead.</p></li>
+        <li><b>What does <code>*</code> mean?</b><p>A wildcard. For example, <code>*.example.com</code> can cover subdomains such as <code>docs.example.com</code> and <code>shop.example.com</code>.</p></li>
+        <li><b>What does <code>^</code> mean?</b><p>At the beginning of a pattern, it tells CopySelect you are using a regular expression rather than a simple wildcard pattern.</p></li>
+        <li><b>What does <code>\</code> do?</b><p>In a regular expression, it escapes characters that would otherwise have special meaning. <code>\.</code> means an actual dot; <code>\\</code> represents an actual backslash.</p></li>
+        <li><b>When do I need regex?</b><p>When <code>*</code> has stopped being cooperative. If a normal domain pattern works, take the win and leave regex undisturbed. Open <a href="#" data-faq-page="sites">Site Rules</a>.</p></li>
+        <li><b>Which Site Rule wins if several could match?</b><p>Rules are evaluated according to their configured priority/order. Put more precise overrides where they can take precedence over broader rules.</p></li>
+      </ol></details>
+      <details><summary>Troubleshooting &amp; reliability</summary><p class="faq-category-note">Things that were not part of the plan.</p><ol start="49">
+        <li><b>Why does an open page sometimes need refreshing after an update?</b><p>Because that tab is still living in the past. Refresh it and the page and extension get the same content-script instructions again.</p></li>
+        <li><b>Why does Copy Confirmation happen only after the clipboard write?</b><p>Because “Copied” should mean copied. CopySelect waits for a successful clipboard write before congratulating itself.</p></li>
+        <li><b>Something still looks stale. What should I try first?</b><p>For organization, use Refresh/Recompute. After an extension update, refresh the affected webpage. If the problem is site-specific, check the matching Site Rule before dismantling the rest of your setup.</p></li>
+      </ol></details>
+    </div>
+  </div>
+</section>
+
+</main>
+<dialog id="collectionDialog" class="collection-dialog collection-dialog-wide" aria-labelledby="collectionDialogTitle"><form method="dialog"><header><div><h2 id="collectionDialogTitle">Collection settings</h2><p>A Collection is a durable project or archive. Turn on WordWatch when you want future matching clips organized automatically.</p></div><button value="cancel" formnovalidate aria-label="Close">×</button></header>
+<section class="collection-details"><div class="collection-section-head"><h3>Collection details</h3><p>Give the Collection a name and optional description.</p></div><div class="collection-details-grid"><label>Name<input id="collectionName" type="text" maxlength="50" required placeholder="Research, Recipes, Rome Trip…"></label><label>Description (optional)<input id="collectionDescription" type="text" maxlength="180" placeholder="What this Collection is for…"></label></div></section>
+<section class="smart-collection-editor wordwatch-editor"><label class="smart-toggle"><span><b>WordWatch quick setup</b><small>Automatically recognize new clips using a few useful terms. Open the Studio for complete logic, testing, and reusable rules.</small></span><input id="collectionSmartEnabled" class="toggle" type="checkbox"></label><div class="wordwatch-setup-bar"><label>Template<select id="collectionWordWatchTemplate"><option value="">None</option><option value="recipes">Recipes</option><option value="research">Research</option><option value="travel">Travel</option><option value="shopping">Shopping</option><option value="coding">Coding</option></select></label><button id="toggleAdvancedWordWatch" class="btn" type="button">Open Advanced WordWatch Studio</button></div><div id="collectionSmartRules" class="smart-rules wordwatch-rules">
+  <label>Sites contain <textarea id="collectionSmartSites" rows="2" placeholder="example.com
+*.example.com"></textarea></label>
+  <label>Any of these <textarea id="collectionSmartText" rows="3" placeholder="recipe*
+ingredient*
+method"></textarea></label>
+  <div id="collectionAndGroups" class="wordwatch-and-groups"><div class="wordwatch-and-group"><label>AND any of these <textarea id="collectionWordWatchAnd" rows="3" placeholder="cup*
+tsp*
+gram*
+ml"></textarea></label><button type="button" class="wordwatch-remove-group hidden" aria-label="Remove this AND group">×</button></div></div>
+  <button id="collectionAddAndGroup" class="btn wordwatch-add-group" type="button">+ Add another AND group</button>
+  <label>Exclude if any — NOT <textarea id="collectionWordWatchExclude" rows="3" placeholder="false positive
+phrase to ignore"></textarea></label>
+  <div class="smart-match-options"><label>Site + text logic<select id="collectionSmartLogic"><option value="or">Site OR text</option><option value="and">Site AND text</option><option value="site">Site only</option><option value="text">Text only</option></select><small id="collectionLogicHelp">A matching site or matching WordWatch text can trigger this Collection.</small></label><label><input id="collectionSmartWhole" type="checkbox"> Whole words only</label><label><input id="collectionSmartCase" type="checkbox"> Case-sensitive</label><label><input id="collectionWordWatchConcepts" type="checkbox" checked> WordWatch Concepts</label></div>
+  <label>Copy mode<select id="collectionSmartMode"><option value="">Any mode</option><option value="plain">Plain Text</option><option value="original">Rich Text</option><option value="markdown">Markdown</option><option value="quote-source">Quote + Source</option><option value="url-title">Text + Reference</option><option value="custom">Custom template</option><option value="manual">Normal browser copy</option></select></label><select id="collectionSmartMatch" class="hidden" aria-hidden="true"><option value="any">Any</option></select>
+</div>
+<div class="wordwatch-actions-grid"><div><h4>When matched</h4><label><input id="collectionActionAdd" type="checkbox" checked> Add to this Collection</label><label><input id="collectionActionPin" type="checkbox"> Pin clip</label><label><input id="collectionActionStack" type="checkbox"> Add to Paste Stack</label><label class="when-matched-tags">Add tags<input id="collectionActionTags" type="text" placeholder="recipe, Italian, restaurant"></label></div><div><h4>Feedback when matched</h4><label>Feedback<select id="collectionFeedbackMode"><option value="global">Use global feedback</option><option value="custom">Custom feedback</option></select></label><label>Message<input id="collectionFeedbackMessage" type="text" maxlength="50" placeholder="🍳 Saved to Recipes"></label><label>Selection effect<select id="collectionFeedbackEffect"><option value="">Use current effect</option><option value="selection-flash">Flash</option><option value="selection-brackets">Brackets</option><option value="soft-halo">Soft halo</option><option value="underline-sweep">Underline</option><option value="none">None</option></select></label><label>Sound<select id="collectionFeedbackSound"><option value="">Use current sound</option><option value="off">Off</option><option value="soft-beep">Soft beep</option><option value="glass-chime">Glass chime</option><option value="soft-tap">Soft tap</option></select></label><label>Accent color<input id="collectionFeedbackColor" type="color" value="#f97316"></label><label>Duration <span class="control-inline"><input id="collectionFeedbackDuration" type="number" min="100" max="5000" step="50" value="900" class="num-sm"><span class="unit">ms</span></span></label><label>Priority<select id="collectionFeedbackPriority"><option value="low">Low</option><option value="normal">Normal</option><option value="high">High</option></select></label></div></div>
+<div class="wordwatch-test"><label>Test WordWatch<textarea id="collectionWordWatchTestText" rows="3" placeholder="Paste sample text to see whether this Collection matches…"></textarea></label><div class="actions"><button id="collectionWordWatchTest" class="btn" type="button">▶ Test rules</button><button id="collectionAiPrompt" class="btn" type="button">Copy prompt for my AI</button><button id="collectionReapplyWordWatch" class="btn" type="button">Reapply to existing History…</button></div><p id="collectionWordWatchTestResult" class="action-status"></p></div></section>
+<section class="collection-lock-editor"><label class="smart-toggle"><span><b>Locked collection</b><small>Hide clips from ordinary History, search, previews, and exports until unlocked.</small></span><input id="collectionLocked" class="toggle" type="checkbox"></label><div class="collection-lock-grid"><label>PIN<input id="collectionPin" type="password" inputmode="numeric" maxlength="12" autocomplete="new-password" placeholder="Choose a PIN"></label><label>Confirm PIN<input id="collectionPinConfirm" type="password" inputmode="numeric" maxlength="12" autocomplete="new-password" placeholder="Re-enter PIN"></label><label class="collection-lock-checkbox"><input id="collectionLockOnClose" type="checkbox"> Lock when browser closes</label><label>Auto-lock after<select id="collectionAutoLock"><option value="0">Never</option><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="60">1 hour</option></select></label></div></section><div id="collectionManageList" class="collection-manage-list hidden"></div><footer><span class="wordwatch-cap-note">Up to 20 active WordWatch Collections · 10 recommended · 100 watched terms each</span><button type="button" id="collectionCancel" class="btn">Cancel</button><button id="collectionSave" value="default" class="btn primary">Save Collection</button></footer></form></dialog>
+<dialog id="collectionUnlockDialog" class="collection-dialog" aria-labelledby="collectionUnlockTitle"><form method="dialog"><header><h2 id="collectionUnlockTitle">Unlock collection</h2><button value="cancel" aria-label="Close">×</button></header><p id="collectionUnlockName"></p><label>PIN<input id="collectionUnlockPin" type="password" inputmode="numeric" maxlength="12" autocomplete="current-password"></label><p id="collectionUnlockError" class="action-status error" role="alert"></p><footer><button id="collectionUnlockButton" value="default" class="btn primary">Unlock</button></footer></form></dialog>
+</div>
+<dialog id="tagDialog" class="tag-dialog" aria-labelledby="tagDialogTitle"><form method="dialog"><header><h2 id="tagDialogTitle">Tags</h2><button value="cancel" aria-label="Close">×</button></header><p id="tagDialogHint" class="tiny">Add lightweight labels without creating a Collection.</p><label>Tags<input id="tagDialogInput" type="text" placeholder="Italian, restaurant, vegetarian"></label><div id="tagDialogSuggestions" class="tag-dialog-suggestions"></div><footer><button value="cancel" class="btn">Cancel</button><button id="tagDialogApply" value="default" class="btn primary">Apply tags</button></footer></form></dialog>
+<dialog id="clipEditDialog" class="tag-dialog clip-edit-dialog" aria-labelledby="clipEditTitle"><form method="dialog"><header><h2 id="clipEditTitle">Edit clip</h2><button value="cancel" aria-label="Close">×</button></header><label>Label<input id="clipLabel" type="text" maxlength="100" placeholder="Optional short label"></label><label>Reusable text<textarea id="clipReusableText" rows="7" required></textarea></label><label>Note<textarea id="clipNote" rows="4" placeholder="Optional private note"></textarea></label><footer><button value="cancel" class="btn">Cancel</button><button id="clipEditSave" value="default" class="btn primary">Save clip</button></footer></form></dialog>
+<div id="a11yStatus" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+<div id="a11yError" class="sr-only" role="alert" aria-live="assertive" aria-atomic="true"></div>
+<dialog id="destructiveConfirmDialog" class="tag-dialog" aria-labelledby="destructiveConfirmTitle"><form method="dialog"><header><h2 id="destructiveConfirmTitle">Confirm permanent removal</h2><button value="cancel" aria-label="Close">×</button></header><p id="destructiveConfirmText" class="tiny"></p><label class="destructive-ack"><input id="destructiveConfirmAck" type="checkbox"> I understand this cannot be undone.</label><footer><button value="cancel" class="btn">Cancel</button><button id="destructiveConfirmAction" value="default" class="btn danger" disabled>Delete permanently</button></footer></form></dialog>
+<script src="smart-core.js"></script><script src="settings.js"></script>
+<script src="copy-utils.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

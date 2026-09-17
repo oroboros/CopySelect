@@ -1,0 +1,441 @@
+CopySelect v3.7.9 — 2026-09-09
+- Rebased on the stylesheet-consolidated 3.7.8.25 RC; responsive.css and accessibility.css remain authoritative modules.
+- About easter egg rebuilt as one scoped component: story beats explicitly own motion, historical egg-only CSS overrides/keyframes removed, stand-up jumps are on the two intended consecutive beats, “A sparrow brings…” is stationary, “Hey stop!” gets the jump-out, translucency begins immediately afterward with opacity-only movement, and Tiny Disco deliberately hops the story line without rotation/scale.
+- Clipboard History timeline rail now derives both X and Y from the actual rendered first/last source-icon centers so no rail segment can protrude above the first icon.
+- Added a fail-closed migration/release gate for the post-3.7.8.25 migration.
+- Restore Effects sizing is intentionally unchanged from the consolidated baseline.
+
+CopySelect 3.7.8.23 RC — 2026-09-08
+- Automatic-copying master switch thumb optically centered by lifting it 1 px.
+- Quick-insert URL/domain/ISO/year examples changed to parenthetical examples; Time retains the formatting note.
+- Profile Guide reads alphabetically down the first column, then down the second.
+- Selection > Unorganized spacing set to 13 px; All now reflects real visible-selection state.
+- “Teach WordWatch from these…” shortened to “Teach WordWatch”.
+- Easter-egg physical press jump removed; extra line-motion effects removed.
+
+CopySelect 3.7.8.22 RC — 2026-09-08
+- Automatic copying master toggle gets a stronger 2 px edge derived from the active Simple/Advanced accent color.
+- Moved Select unorganized into the Selection menu and made it a true toggle: select visible unorganized clips, then click again to unselect that same visible set.
+- Replaced the Teach WordWatch from these glyph/spacing artifact with one clean black inline icon.
+- Smoothed the easter-egg emotionally-translucent sequence so opacity transitions rather than jumping; added restrained motion accents to the look-back, paper-airplane, rainbow, and existing disco beats.
+- Profile Guide preset descriptions are stored and rendered in alphabetical order.
+- Open Advanced WordWatch Studio is raised 17 px and both it and Back to Collection Settings use a stronger matching accent-family border.
+- Quick Insert tooltips now include examples for URL, Domain, ISO date, and Year; Time notes that its format can be customized below.
+
+CopySelect 3.7.8.21 RC — 2026-09-08
+- Fixed the General sticky-note regression at its runtime-DOM cause: the note is now moved into the generated Automatic copying card before the original General markup is replaced. The master toggle also has a visible 1 px edge.
+- Copy Confirmation final layout is locked to Size | Duration | Restore Effects so legacy CSS cannot move Restore into Duration's column.
+- Clipboard Storage keeps the three calibrated spacing targets and top-aligns Delete after with its value/unit fields.
+- History timeline now uses adaptive, non-repeating labels: exact recent minutes, 15-minute buckets, sparse hour groups that become 15-minute groups only when dense, then Today/Yesterday/date with quarter-hour time beneath.
+- History shows one Select unorganized action for the visible list rather than repeating it by group.
+- Simple mode active/selected History and Site Rules accents, including copy-success feedback, use the Simple dark-blue accent instead of Advanced cyan.
+- About easter egg adds Shift+Click to restart and Ctrl+Click to go back one beat; the emotionally translucent sequence now visibly fades both the button and its line while keeping the progressive dots legible.
+- FAQ rewritten in CopySelect's compact, dry, mildly eccentric voice, with expanded guidance for History, organization, WordWatch, templates, Site Rules, privacy, and troubleshooting. Internal FAQ navigation uses plain-text “Open ” followed by only the destination label as the link.
+- Build/package naming returns to CopySelect_v<version>.zip; in-app data exports remain date-based.
+
+CopySelect 3.7.8.20 RC — 2026-09-08
+- General sticky note is now visible at desktop and narrower desktop widths; it is no longer hidden by the <=900px responsive rule.
+- Clipboard Storage Settings: the three special parent→child separations were recalibrated downward toward the requested ~30px rendered spacing (visual calibration, not a 30px CSS margin).
+- History timeline now starts at the first source icon without a rail segment protruding above it; relative/degrading age labels live to the left of the icon.
+- History metadata header now places the exact full timestamp on the title line at right and the smaller gray domain immediately after the title.
+- History copy-success flash reduced from 1000ms to 500ms while retaining the 1px border + 2px neon-blue outer ring.
+- Dialog-container focus outlines no longer create a black border when blank modal space is clicked; interactive controls retain their own focus styling.
+- Reliability & Safeguards separator is explicitly fixed at 22 CSS px left of the two-column midpoint (the previously requested additional 7px move).
+
+CopySelect 3.7.8.19 RC — 2026-09-08
+- Fixed phantom re-copy when returning to a page that still displays an unchanged prior selection. Pointer completion now copies only when the gesture actually creates or changes the selection; duplicate mouseup/pointerup scheduling is suppressed.
+- History metadata timestamp is now visible in both compact and expanded snippets whenever Metadata is enabled. Relative age moves to the top-left and uses the 1/5/10/15/30/45 minute, 1/2/3 hour degradation sequence before switching to date (with Yesterday preserved). The full formatted timestamp moves to the top-right.
+- Made the History action group 20% more transparent while keeping the expand/compress button permanently white.
+- Fixed the hard History copy-success duration bug: stats-only storage updates no longer re-render the snippet and destroy the flash immediately. The verified visible effect is now 1 second with the existing 1 px neon-blue border and 2 px outer ring.
+- History now renders 50 items per batch and automatically loads the next batch near the end. The end marker reflects the active context (Today, Formatted, Pinned, collection, search results, etc.).
+- Collection Settings and WordWatch Studio received a rendered-layout correction pass: top spacing was reduced again, When matched is genuinely top-aligned in three columns with checkbox-label spacing halved, and Add tags is about 85 px longer than the pre-fix field.
+- WordWatch Studio removes the empty setup row left behind when the Back button moves to the header, and the rule editor uses compact verified spacing.
+- Reliability & safeguards separator moved 7 px farther left.
+- Data exports use YYYY-MM-DD in filenames instead of app version numbers.
+- General now includes a sticky-note cue with a hand-drawn curved arrow pointing to the Enable CopySelect master switch.
+
+CopySelect 3.7.8.17 RC — metadata clipboard hotfix
+- Fixed Metadata → Defaults incorrectly enabling appended metadata even though the app default is off.
+- Added a conservative migration for the exact affected Default-profile configuration from 3.7.8.16.
+- Ctrl+Shift+V now recognizes CopySelect's own formatted clipboard payload and inserts the raw selected text, excluding CopySelect metadata.
+- External/non-CopySelect clipboard text is left unchanged by Ctrl+Shift+V.
+
+CopySelect 3.7.8.16 RC
+
+- Reduced only the three requested Storage child gaps from 7.5 px to 4.5 px.
+- History expand/compress appears only for expandable content; collapse icon raised 1 px; expand/compress button is white at rest.
+- History copy-success feedback is now 1000 ms with a 1 px neon-blue border + 2 px outer ring, including metadata-visible cards.
+- Corrected expanded/metadata display behavior from 3.7.8.15 and moved the History/View right-side toolbar block 30 CSS px left using CSS-pixel semantics.
+- Tightened Collection Settings/WordWatch Studio vertical spacing and rebuilt When matched as three checkbox columns plus a full-width Add tags row.
+- Optimized WordWatch Studio rule-panel whitespace and right-aligned the real Back to Collection Settings button.
+- Fixed custom metadata separator serialization so the literal word “custom” can no longer appear between pasted metadata fields.
+- Added Ctrl+Shift+V / Shift+Ctrl+V plain-text paste handling for editable web fields.
+- Shifted the Reliability separator 15 px left.
+- Replaced the FAQ two-button expand/collapse controls with one line-only icon + text toggle.
+- Nudged the History contrast icon 1 px right/down and softened it to dark gray.
+
+CopySelect 3.7.8.15 RC
+
+Targeted correction pass from 3.7.8.14
+- Reduced only the three requested Storage child gaps by 50% (15 px → 7.5 px).
+- Nudged the History contrast indicator right/down by the requested visual amount and moved the View separator and everything to its right left by 60 display pixels, while leaving the History group in its 3.7.8.14 position.
+- Replaced snippet expand/compact runtime icons with the user-supplied PNGs and retained snippet-compact_2.png as an unused alternate.
+- Set History copy-success feedback to 750 ms with a 1 px border + 2 px neon-blue outer ring in every view/metadata state.
+- Fixed Expanded History metadata visibility so the global Metadata toggle is authoritative and clicking metadata no longer collapses the snippet.
+- Changed the snippet action-cluster background from translucent white to a subtler translucent blue-gray.
+- Tightened Collection Settings / WordWatch Studio card rhythm, normalized checkboxes with white checks and per-mode accent color, aligned Duration to Feedback, rebuilt When matched placement, and restored the Studio back control as a real button.
+- Strengthened Site Rules Inherit-global menu coloring, re-synced inherited-value tint after loading/resetting a rule, and expanded site-pattern help for *, ^, and \ with FAQ guidance.
+- Added a vertical separator to Reliability & safeguards and expanded the numbered FAQ with expand-all/collapse-all controls and additional organization/site-rule guidance.
+
+CopySelect 3.7.8.14 RC
+- UI correction pass: storage spacing, History copy feedback, Collections/WordWatch alignment, Site Rules tooltip/color behavior, Reliability layout, and About FAQ.
+
+CopySelect 3.7.8.13 RC
+
+- Completed the expert-panel pre-release review across MV3 architecture, UI systems, UX/accessibility, interaction design, QA/release engineering, privacy/security, performance, and devil’s-advocate regression testing.
+- Copy Confirmation: eliminated the remaining Custom Symbol layout jump by reserving its slot permanently, removed the legacy positioning conflict, restored the single approved Restore Effects control, normalized Customize Effects label typography, and kept the Background alignment correction.
+- Storage & retention: preserved exactly one monochrome heading icon for Capture, Retention, and Cleanup, standardized requested child-row spacing, reduced the Summary-to-pinned gap, and retained explicit pinned-item protection wording.
+- Clipboard History: replaced the unreadable light-text outline treatment with true preview-only WCAG-style contrast detection and recoloring; added a small contrast indicator beside the timeline with an explanatory tooltip while leaving stored Rich Text unchanged.
+- Clipboard History: corrected source-marker semantics so an icon appears at each source transition, the final entry always has a marker, and missing favicons receive a stable colored domain-initial fallback.
+- Clipboard History: doubled the copy-success flash thickness and duration and fixed the JavaScript timeout so the longer animation can actually finish.
+- Search: retained consistent fuzzy, quoted phrase, wildcard (*), required (+), excluded (-), AND/OR/NOT, and parenthesized syntax across supported CopySelect search fields; the History help tooltip documents the grammar with real quote characters.
+- Collections: completed another compact-layout pass for Quick Collection Settings, aligning repeated controls with the rest of CopySelect while keeping advanced WordWatch configuration separate.
+- Selection capture: pure keyboard Shift-selection in editable text keeps the smart grace period, while Shift+click is treated as mouse-assisted range selection and uses the normal Copy Delay.
+- About: stabilized the translucent-button fade so only opacity changes during the sequence, kept the twirl for the disco beat, and increased yellow-response breathing room.
+- Version help: added a compact multiline release-summary tooltip to visible version numbers with a pointer to the Full Changelog.
+- Prepared an inert AI integration scaffold with request/result contracts and provider/privacy boundaries. It is not imported, enabled, networked, permissioned, or exposed in the RC UI.
+
+Cumulative RC work since the uploaded 3.7.8.3.1 baseline is retained below.
+
+CopySelect 3.7.8.12 RC
+
+- Refined keyboard-selection capture: Shift+Arrow/Home/End uses the editable grace period, while Shift+click is treated as a completed mouse-assisted range and uses the normal Copy Delay.
+- Unified Search grammar across Clipboard History, Settings search, and Saved Site Rules search: fuzzy words, exact quoted phrases, * wildcard, +required, -excluded, AND, OR, NOT, and parentheses. Fixed the Search help tooltip so quotes render normally instead of leaking &quot;.
+- Added a stronger built-in stop-word list for automatic tag suggestions so filler such as “still” and contractions such as “I’m” are not proposed as tags.
+- Fixed Corner Message regressions: Background label offset, stable Symbol placement when Custom is selected, correctly sized square Custom field, and restored Restore Effects to the Size/Duration row.
+- Completed Storage & retention cleanup: one black icon per Capture/Retention/Cleanup heading, corrected child-row spacing, protection-icon positioning, explicit “entries” wording, and retained pinned protection spacing.
+- Made rich History previews readable when captured webpage formatting uses white/light text without changing the saved rich content.
+- Strengthened and doubled the History snippet copy-success flash.
+- Ensured the final timeline entry always has a source marker; missing favicons receive a deterministic colored circle with the domain initial, with stable per-domain color assignment.
+- Further compressed and aligned Collection settings and retained the standard Locked Collection toggle.
+- Fixed the Easter-egg translucency sequence so the button actually fades; reserved a small twirl for the disco beat and increased yellow-message vertical breathing room.
+- Normalized History items and Collections heading spacing/type against Profiles and refined Clipboard History toolbar alignment around Paste Stack, History, View, and Metadata.
+- Updated Simple History onboarding copy to “CopySelect remembers so you don’t have to.” with Advanced mode on the same explanatory line.
+
+Cumulative RC work since the uploaded 3.7.8.3.1 baseline is retained below.
+
+3.7.8.9 RC
+
+- RC: added smart keyboard-selection grace in editable fields (1200 ms minimum after Shift release, cancelled on editing or explicit copy).
+- RC: documented future opt-in capture of webpage-owned Clipboard API copy buttons without shipping interception logic.
+- RC: rebuilt live Copy Confirmation preview timing/endpoint behavior and corrected bracket alignment.
+- RC: completed Storage & retention, Collection settings, Read Aloud toggle, Corner Message, and Easter-egg polish.
+CopySelect 3.7.8.8 RC
+
+- Final Copy Confirmation alignment pass: Effect color, Flash text color, and Opacity share a row; Background well shifts left; Style and Preview share the requested left edge at 150% Windows scaling.
+- Normalized remaining page origins, tightened Clear unpinned History spacing, retained accent-blue focus rings, and kept Read Aloud help-card alignment/border polish.
+- Kept Quick Insert's two explicit character-count tokens (with spaces / without spaces) while removing the redundant generic Character count token.
+- Fixed release-facing version drift in the popup and backup filenames, and aligned exported/imported backup schema reporting with the current schema.
+- Made pinned-item retention unconditional in the pruning path, so “Pinned items are ALWAYS protected!” is now enforced even against stale legacy settings.
+- Fixed combined History searches such as `site:… pinned`: bare History operators now keep their operator meaning when mixed with advanced query syntax.
+- Reduced Easter-egg code to one deterministic controller while preserving the approved copy.
+
+CopySelect 3.7.8.7 RC
+
+- Final pre-release UI normalization: all settings pages use Copy Confirmation’s left edge, focus rings use the accent blue, Read Aloud guidance is top-aligned, and Storage & retention now targets its actual runtime page ID.
+- Finished Corner Message and Selection Feedback geometry, including a four-column symbol picker, explicit empty symbol, custom-symbol placement, color-well centering, opacity/style positioning, and Restore Effects alignment.
+- Finished Simple-mode copy preview spacing and History onboarding copy.
+- History now auto-loads additional filtered clips as the user approaches the bottom and shows End of History only when the filtered list is truly exhausted.
+- Made pinned-history protection unconditional to match the UI promise and removed the accidental “proj handoff” built-in template.
+- Fixed the About changelog viewer by moving script execution out of inline CSP-blocked code and backing it with CHANGELOG.txt.
+- Updated the About easter egg copy and extended the snippet copy-success flash.
+
+CopySelect 3.7.8.6
+
+- Refined Copy Confirmation restore/color/symbol controls and made custom dropdowns escape stacking contexts.
+- Matched Storage & retention typography to General and corrected child-label/icon alignment.
+- Refined History snippet expand/compact actions, text-only fade, tags, timeline end cap, tag toggles, and larger row-selection hit area.
+- Standardized “Copied text” wording and Copy Mode preview lead formatting.
+
+CopySelect 3.7.8.5
+
+- Raises the Selection feedback toggle to the heading line and keeps the preset guidance to two lines.
+- Changes the Customize effect reset into a centered “Restore Effect” control with a slightly larger restore glyph.
+- Reconciles Storage & retention child-label indentation with the supplied red-guide reference while keeping Retention inputs aligned.
+- Moves snippet expand/collapse into the translucent action cluster immediately before Copy as.
+- Pulls the History Filters panel directly beneath its trigger and aligns its right edge beneath the Filters control.
+- No automatic-copy behavioral path was intentionally changed in this UI corrective.
+
+CopySelect 3.7.8.4
+
+- Corrects the Copy Confirmation geometry at 150% Windows scaling, including the Copy-mode preview height, slider values, conditional Flash text color, centered color wells, Symbol picker, and Corner-message row collision.
+- Realigns Storage/Retention child labels to the supplied red guide and fits protection icons into the indentation gutter.
+- Rebuilds Clipboard History density/snippet controls from the supplied Option 1B and Option 6D artwork, tightens segmented-control borders, repositions snippet controls, and corrects Filters/Pinned-only controls.
+- No automatic-copy behavioral path was intentionally changed in this UI corrective.
+
+CopySelect 3.7.8.1 UI Implementation Build
+
+- Preserves the user-confirmed automatic copy-on-select path while distinguishing drag selections from double-clicked words.
+- Completes the audited Copy Confirmation, History, Storage, Metadata, Site Rules, Collections/WordWatch, Read Aloud, and Data & Backup UI corrections.
+- Restores the credited clover image in the Rich Text preview and applies the approved History state/action icons.
+- Adds consistent checkbox-gated confirmation for primary destructive actions.
+
+CopySelect 3.7.6.13
+
+- Finishes History search, delay, action grouping, Site Rules placeholders, and left-aligned utility cleanup.
+- Separates Collection Quick Setup from the expanded WordWatch Studio while preserving the local-first rule engine.
+
+#Changelog v3.7.6.12
+
+- Refines Corner Message geometry, standardizes timing fields, polishes History tags and controls, and expands free Read Aloud voice guidance.
+
+#Changelog v3.7.6.11
+
+- Reorganizes Corner Message, stabilizes History views, compacts Profiles, and repairs Read Aloud voice loading and editable range controls.
+
+#Changelog v3.7.6.10
+
+- Corrects the post-v3.7.6 layout follow-up: Copy delay, tag interaction, sensitive-field capture, Read aloud, Metadata preview, and Clear History artwork.
+
+#Changelog v3.7.6.1
+
+- Corrects the first post-v3.7.6 layout follow-up.
+
+#Changelog v3.7.6
+
+- Preserves the clean-folder v3.7.5.3 automatic copy-on-select implementation.
+- Makes HTML LINKS the default link-copy mode.
+- Corrects Copy confirmation column geometry, delay alignment, tag sizing, Cleanup art, and the privacy shield.
+- Adds italic and bold-italic Corner message text styles.
+- Expands built-in templates and changes the blank template choice to New template.
+- Introduces Collection WordWatch quick setup with an explicit Advanced WordWatch Studio view.
+- Removes the redundant settings-mode explanation and adds color to the About tagline.
+
+#Changelog v3.7.5.3
+#Focused small corrections
+
+- Removed the extra 1 px inset in the Recent/Pinned and Compact/Full segmented controls.
+- Restored Reading note as the third built-in saved template, including migration for existing two-template installs.
+- Shortened Selection trigger by the requested 20 px; the previous CSS targeted the wrong consolidated card.
+- Reorganized Capture hierarchy: normal browser copies and images are visibly subordinate; sensitive fields are last with a privacy shield.
+- No automatic-copy code was changed in this build.
+
+- Added safe update-time reinjection for eligible open HTTP/HTTPS tabs so automatic CopySelect and feedback resume after an unpacked extension reload.
+- Added flyout page-connection status with a one-click Reconnect action.
+- Made the content bundle idempotent so reconnection does not duplicate selection or copy listeners.
+- Fixed the Live Preview column at 520 px on the three-column desktop layout.
+- Completed segmented value/unit controls, including Delay fields, and reduced slider thumb borders to 1 px.
+- Corrected the preview sequence: selection highlighting sweeps first, pauses 300 ms, then the chosen effect runs.
+- Added the Simple Metadata Length selector and changed COPIED TEXT to a fixed non-button anchor.
+- Corrected Storage icon alignment, counters placement, Export tint, History Filters behavior/icon, and Read Aloud sizing.
+
+CopySelect 3.7.4
+
+#Clipboard certainty and approved UI decisions
+- Added a page-local clipboard fallback so a temporary worker/offscreen failure does not silently lose the selection.
+- Clear stale restart-pause state on install/update and keep History/WordWatch outside the clipboard-success response path.
+- Kept Selection Feedback at its current desktop width, set Corner Message to 550–560 px, and let Live Preview take the remaining third column.
+- Updated value/unit fields to the approved segmented treatment, reduced slider thumb borders to 1 px, and added the approved left-to-right preview selection sweep.
+- Added the approved CopySelect-focused preview copy and explicit Yes/No reset-counter confirmation.
+
+CopySelect 3.7.3
+
+#Functional and timeline corrective
+- Preserved the proven v3.6.9 selection listener and made the clipboard service fail open if WordWatch cannot initialize.
+- Return confirmed clipboard success before History and organization persistence, so storage work cannot suppress copy feedback.
+- Restored one absolute quarter-hour timeline post per 15-minute bucket with Today, Yesterday, or calendar-date context.
+- Added rounded recent-age degradation and exact expanded timestamps such as `Sept 1, 2026, 13:14.58`.
+- Restored the missing Clip Notes editor and corrected responsive History, Collection-editor, About, and popup bounds.
+- Prevented hostile wildcard rules from blocking the clipboard worker and tightened locked-collection projections.
+
+#Stability corrective
+- Restored the proven v3.6.9 automatic-copy content path.
+- Restored the v3.6.9 clipboard response ordering: clipboard write first, history/organization isolated afterward.
+- History filters now fit on one right-aligned row; Pinned only remains the standard toggle.
+- Auto-expand Delay is a real editable four-digit number field and remains configurable while Auto-expand is off.
+- Clear History button is 50px narrower.
+- Collection header/actions are locked to one right-aligned row.
+- Everything export card now uses the same neutral treatment as Settings.
+- Easter-egg button is centered and kept 25px lower without horizontal drift.
+
+3.7.1
+
+- Restored a fail-safe clipboard path and removed smart-organization work from the copy-response critical path.
+- Fixed Selection trigger overflow, neutralized blue/lavender field focus borders, and tightened Copy Confirmation geometry.
+- Fixed Selection feedback duration preview timing.
+- Fixed Metadata & Templates helper clipping.
+- Improved Clipboard Storage retention summary, Cleanup icon spacing, and Clear History border width.
+- Refined History filter dropdown, dynamic caret, right-aligned Settings-style filter panel, Pinned-only toggle, and editable 4-digit delay.
+- Restored centered Easter egg button placement and moved local-first down 2 px.
+
+3.7.0 — Organization & WordWatch foundation
+
+- Added Tags, suggested-tag confirmation/dismissal, and high-confidence auto-tag preference.
+- Added Collections organization hub with Tags and Saved Views.
+- Upgraded Collection automation to WordWatch AND / OR / NOT / wildcard rules, up to 10 AND groups / 100 watched terms, and WordWatch Concepts.
+- WordWatch can add Collection membership, tags, Pin, Paste Stack and custom copy feedback.
+- Added History sessions and safe “Select unorganized” cleanup review.
+- Added automatic organization refresh and manual hard Refresh/Recompute.
+- Added “Teach WordWatch from these”, multi-group rule editing/testing, and a provider-neutral external-AI prompt helper.
+- Added Paste Stack / Collections / WordWatch status to flyout and starts fast local pre-analysis inside Copy Delay without ever making copy wait beyond the configured delay.
+- Applied Copy confirmation, Modifier override, Symbol, History toolbar, border, easter-egg and branding UI fixes requested for 3.6.11.
+
+CopySelect Changelog
+
+#3.6.11
+
+- Tightened History, Site Rules, and Collection control sizing to match Copy confirmation controls.
+- Refined History heading, Saved Rules spacing, Activity & Privacy layout, and sidebar branding.
+- Added automatic sound preview when choosing a sound in global and Site Rule controls.
+- Stabilized Date/Time custom-token layout and restored the Reading note saved template.
+- Corrected Copy mode preview alignment, Metadata preview spacing, modifier spacing, and About button border.
+
+#3.6.10
+
+- Updated Clipboard History toolbar to the approved grouped layout: Actions, History scope, and View, with segmented Recent/Pinned and Compact/Full controls.
+- Rebuilt Site Rules into the approved three-column editor plus fixed Saved Rules fourth column, with selectable/editable saved rules and drag-to-reorder priority.
+- Reworked Collection settings into the approved wide grouped modal for details, Smart Collection rules, and Locked Collection controls.
+- Added conditional per-site values for minimum selection, notification duration, and auto-add Collection target while preserving inheritance.
+- Made per-site Save to History, Source details, and Auto-add to Collection overrides apply to captured History entries.
+- Fixed Smart Collection site parsing and Rule logic recomputation for existing clips.
+
+
+#3.6.9
+
+- Added named saved templates with template selection and migrated token-dump examples to the realistic stock template.
+- Restored the approved Simple-mode Advanced-effects note while keeping the rejected duplicate strip removed.
+- Tightened dependent-control disabled styling, Corner Message columns, compact screen-position geometry, and overflow-prone pages.
+- Rebuilt timeline labels as quarter-hour clock posts, strengthened fallback initials, and added metadata-on depth.
+- Consolidated Saved Rules examples into one continuous list and normalized its search-field border.
+
+#3.6.8
+
+- Consolidated release-critical CSS geometry and added a cascade regression contract.
+- Restored History time relative-to-absolute degradation, 15-minute grouping, timeline alignment, and a visibly navy continuous rail.
+- Completed Corner Message sizing, spinner-free inputs, conditional custom symbol, and exact 5:3 position selector behavior.
+- Split Simple Metadata from Advanced Templates & Metadata, added the shaded resolved preview, and migrated the realistic template example through schema 17.
+- Matched the three-column Site Rules workspace and completed its saved-rule and footer actions.
+- Made Smart Collection domains and WordWatch expressions accept newline, comma, or semicolon separators.
+
+#3.6.7
+
+- Matched the requested one-line selection example, timestamp offset, dark timeline rail, and handwritten cleanup-button geometry.
+- Standardized user-facing format names as Plain Text and Rich Text.
+- Split Metadata appropriately between Simple and Advanced modes and rebuilt Site Rules into the supplied three-column workspace.
+- Corrected four-digit numeric controls, slider value clipping, modifier spacing, Corner message width, and the 5:3 position selector.
+
+#3.6.6
+
+- Rebuilt the History header grouping, continuous source-icon timeline, and compact metadata-off layout.
+- Corrected selection-preview wrapping, template content, slider value width, and the Clear History handwritten insertion.
+- Expanded Collections with descriptions, one-per-line source domains and WordWatch, explicit smart-rule logic, and compact PIN controls.
+- Rejected whitespace-only History clips and automatic selections shorter than the configured threshold.
+
+#3.6.5
+
+- Added Clip Notes: labels, notes, and edited reusable text preserve the original capture and metadata.
+- Added WordWatch keyword/phrase routing, Locked Collections, and FindSense fuzzy History search.
+- Made Copy as availability honest: Rich HTML and source-dependent formats disable when their data was not captured.
+- Corrected slider width, preview placement, timeline continuity, compact metadata-off geometry, toggle text, and the Clear History annotation.
+
+#3.6.4
+
+- Refined form typography, slider widths, modifier spacing, and the raised corner-message preview.
+- Rewrote the live selection example and Custom Template example with more natural, representative content.
+- Corrected Easter-egg message alignment and the handwritten unpinned annotation.
+- Unified favicon and fallback-initial timeline positioning, suppressed repeated domain icons, and added stable collision-resistant domain colors.
+- Removed the duplicate icon beside Pin selected.
+- Added discreet separators between sidebar navigation categories.
+
+#3.6.3
+
+- Removed competing accessibility-label passes so controls have one predictable naming path.
+- Rebuilt help icons as keyboard-operable help controls with separately described tooltips.
+- Corrected live copy announcements so assistive technology detects the status change reliably.
+- Added dedicated regression coverage for the advanced v3.6 History and accessibility workflows.
+
+#3.6.2
+
+- Accessibility-only release: no feature or layout redesign.
+- Added accessible names/descriptions to Options controls, screen-position choices, help tips, and popup delay.
+- Added complete keyboard interaction for History tabs/disclosure menus, Settings search, and the corner-message symbol picker.
+- Added live status/error announcements and accessible numeric validation feedback.
+- Improved visible focus treatment and Windows high-contrast support.
+- Replaced inaccessible cyan-on-white/white-on-cyan combinations with a darker companion cyan where text or filled controls require WCAG AA contrast.
+- Improved Activity statistics semantics and specific names for History/Site Rule actions.
+
+
+#3.6.1
+
+- Fixed legacy History entries without IDs so batch deletion cannot remove unrelated items.
+- Serialized History/stat mutations to prevent lost updates from concurrent copies.
+- Made complete backup restore transactional with rollback and preserved large history-only imports against the active retention limit.
+- Made Paste Stack items advance only after successful copy/paste operations.
+- Fixed same-text pin identity and collection metadata synchronization between Recent and Pinned representations.
+- Restored Metadata/Before & After controls and the History hover-delay setting that were unintentionally hidden by UI consolidation.
+- Fixed Ctrl+C capture from form fields and selection-trigger classification for form selections.
+- Fixed custom `DDD` weekday formatting, numeric bounds persistence, local-calendar `today` filtering, and stale weekly Activity counts.
+- Serialized offscreen clipboard-document creation and enabled unlimited local extension storage for rich History reliability.
+
+#3.6.0
+
+- Reorganized Advanced navigation into Copying, History, Workflows, Tools, and Info groups.
+- Simplified Clipboard Storage into explicit capture, maximum-history, maximum-age, minimum-keep, and pinned-item policies.
+- Added independent temporary History-saving pause in the flyout.
+- Added Smart Collections with site, text, and copy-mode rules.
+- Added Paste Stack for sequential middle-click pasting and copy-next workflow.
+- Added History “Copy as” transformations: original, plain text, Markdown + source, Quote + Source, Text + Reference, and Custom Template.
+- Repeated history copies now collapse into one entry with a repeat counter.
+- History search now supports site:, collection:, today, pinned, formatted, images, repeated, and quoted exact phrases.
+- Renamed Custom Template Copy to Templates & Metadata; Advanced to Activity & Privacy; improved General wording.
+- Moved sound controls out of the Preview column and expanded local activity insights.
+
+#3.5.18
+
+- Standardized compact field typography, geometry, spacing, and left alignment across settings.
+- Joined fixed units to numeric fields and refined the Corner message preview alignment.
+- Standardized longer sliders with centered values and a blue thumb with a 2 px white ring.
+- Fixed selected-history export wording, numeric persistence for Minimum keep, and menu accessibility state.
+
+#3.5.6
+
+- Rebuilt History into distinct Storage & retention and History items workspaces.
+- Added persistent selection checkboxes, selection actions, saved Collections, and visible-history export.
+- Added Capture controls for source details, rich text, and sensitive-field exclusion.
+
+#3.5.5
+
+- Reworked Automatic copying and every feedback channel toggle.
+- Rebuilt Corner message controls and embedded preview.
+- Improved selection-effect positioning and interactive preview behavior.
+- Reorganized clipboard History into storage and viewing modules.
+- Added batch deletion, absolute metadata timestamps, timeline degradation, favicon fallbacks, and domain colors.
+- Expanded custom-template tokens and previews.
+- Refined Simple mode, Site Rules, Profiles, voice descriptions, backup text, and the About page.
+- Added the multi-stage pigeon Easter egg.
+
+#3.5.x
+
+- Added Selection Flash, Brackets, individually tuned effect presets, rich history, profiles, site rules, custom templates, improved flyout controls, and local usage counters.
+
+#3.0.x
+
+- Introduced the redesigned Simple and Advanced settings experience.
+
+#2.x
+
+- Expanded copy modes, metadata, per-site behavior, confirmation effects, audio, and history.
+
+#1.x
+
+- Initial automatic-copy extension with local settings and basic confirmation.
+
+
+2026-09-08 — Metadata clipboard hotfix
+- Fixed a saved Default-profile snapshot that could silently re-enable appended metadata after the previous live-state migration. The affected Rich Text + Default + {text}-only configuration is repaired without disabling Research/custom metadata configurations.
+- Reworked Ctrl+Shift+V handling around the actual paste event. CopySelect now tracks Ctrl/Shift independently, supports nested contenteditable/role=textbox editors, and resolves a recent CopySelect clipboard envelope back to the original raw selection before insertion.
+- Added local-page envelope fallback plus background/session envelope resolution for cross-tab plain-selection paste.
+
+3.7.8.25
+- Easter egg: only button jumps around the “Everyone stands. Even the button.” beat; translucency starts with fade only; tiny disco jumps the line.
+- History: timeline rail starts behind the center of the first source icon.
