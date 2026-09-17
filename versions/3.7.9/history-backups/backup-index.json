@@ -1,0 +1,7 @@
+{
+  "format": 1,
+  "build": "c3.7.8.13_RC",
+  "retention_target": 2,
+  "snapshots": [],
+  "note": "No live clipboard-history export was available in the build package at repackaging time."
+}

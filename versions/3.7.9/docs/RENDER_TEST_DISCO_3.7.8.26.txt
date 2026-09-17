@@ -1,0 +1,2 @@
+gone btn egg-button egg-fading egg-gone
+DISCO A tiny disco moment. 🪩 {'anim': 'eggDiscoLineHop', 'transform': 'matrix(1, 0, 0, 1, -125, -62)'} {'anim': 'eggDiscoLineHop', 'transform': 'matrix(1, 0, 0, 1, -125, -62)'} line_dy -3.45 button_dy 0
