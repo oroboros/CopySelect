@@ -1,0 +1,75 @@
+{
+  "manifest_version": 3,
+  "name": "CopySelect",
+  "version": "3.7.9",
+  "description": "Auto-copy text selections with local History, WordWatch organization, tags, Collections, Paste Stack and configurable feedback.",
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "activeTab",
+    "tabs",
+    "scripting",
+    "offscreen",
+    "clipboardRead",
+    "clipboardWrite",
+    "contextMenus",
+    "windows",
+    "favicon"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon_16.png",
+      "32": "icon_32.png",
+      "48": "icon_48.png",
+      "128": "icon_128.png"
+    }
+  },
+  "icons": {
+    "16": "icon_16.png",
+    "32": "icon_32.png",
+    "48": "icon_48.png",
+    "128": "icon_128.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "settings.js",
+        "copy-utils.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+C"
+      },
+      "description": "Open CopySelect"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "sounds/*.wav"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ]
+}

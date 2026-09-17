@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 114 50" role="img" aria-label="Clear unpinned history">
+  <rect x="5" y="14" width="104" height="34" rx="9" fill="#fff" stroke="#ffaaaa" stroke-width="1.5"/>
+  <text x="11" y="38" fill="#dc2626" font-family="Arial, sans-serif" font-size="13" font-weight="700">Clear</text>
+  <text x="49" y="38" fill="#dc2626" font-family="Arial, sans-serif" font-size="13" font-weight="700">History</text>
+  <text x="36" y="29" fill="#d9673f" font-family="Segoe Print, Comic Sans MS, cursive" font-size="11.5" font-style="italic" transform="rotate(-7 36 29)">unpinned!</text>
+  <path d="M41 40 L45 34 L49 40" fill="none" stroke="#d9673f" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="miter"/>
+</svg>
