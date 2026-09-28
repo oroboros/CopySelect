@@ -1,0 +1,74 @@
+name: Privacy lint
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  privacy-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check commit identity and added email addresses
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE="${{ github.event.before }}"
+          fi
+          HEAD="${{ github.sha }}"
+
+          if [[ -z "$BASE" || "$BASE" == "0000000000000000000000000000000000000000" ]]; then
+            RANGE="$HEAD"
+          else
+            RANGE="$BASE..$HEAD"
+          fi
+
+          echo "Checking commit identities in $RANGE"
+
+          bad_identity=0
+          while IFS=$'\t' read -r sha ae ce; do
+            for email in "$ae" "$ce"; do
+              case "$email" in
+                *@users.noreply.github.com|noreply@github.com|"")
+                  ;;
+                *)
+                  echo "::error::Non-private Git email in commit $sha"
+                  bad_identity=1
+                  ;;
+              esac
+            done
+          done < <(git log --format=$'%H\t%ae\t%ce' "$RANGE")
+
+          if [[ "$bad_identity" -ne 0 ]]; then
+            exit 1
+          fi
+
+          echo "Checking newly added lines for exposed email addresses"
+
+          if [[ "$RANGE" == "$HEAD" ]]; then
+            diff_cmd=(git show --format= --unified=0 "$HEAD")
+          else
+            diff_cmd=(git diff --unified=0 "$RANGE")
+          fi
+
+          added_lines="$("${diff_cmd[@]}" | grep '^+' | grep -v '^+++' || true)"
+
+          bad_emails="$(printf '%s\n' "$added_lines"             | grep -Eio '[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}'             | grep -Eiv '(@users\.noreply\.github\.com$|^noreply@github\.com$)'             || true)"
+
+          if [[ -n "$bad_emails" ]]; then
+            echo "::error::Potential personal email address added to tracked files."
+            printf '%s\n' "$bad_emails"
+            exit 1
+          fi
+
+          echo "Privacy lint passed."
