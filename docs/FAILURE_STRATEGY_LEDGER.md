@@ -16,3 +16,14 @@ Status: initialized 2026-10-20. This is a living engineering record, not proof t
 ## Failure-review protocol
 For each incident append: date, version/SHA, reproduction, expected versus actual, impact, evidence links, root-cause hypothesis, tests, rejected fix attempts, chosen change, regression coverage, outcome and rollback checkpoint.
 Do not delete historical failure entries. Explicitly label unknown/unverified conditions.
+
+
+## 2026-10-20 engineering-pass evidence
+- CI commit `0c8b3b6762d1386f0355fbe745e3e5129fd66046`, GitHub Actions run `39396083723`: manifest/syntax validation, manifest permission inventory, HTML integrity, multilingual smart-tagging contracts, runtime-hotspot inventory, SHA256 artifact upload all **PASS**. These are static/contract gates only.
+- `scripts/audit-extension-manifest.cjs`: catalogs manifest permissions and missing runtime dependencies. Broad permissions are WARN, not automatic failures; necessity requires manual privacy/functional review.
+- `scripts/inventory-runtime-hotspots.cjs`: outputs `runtime-hotspots.json` in CI artifact. Counts are hypotheses only, not measured long tasks or render bottlenecks.
+- `tests/smart-tagging-contract.test.cjs`: synthetic multilingual concept, existing-tag, deterministic output and mutation-safety contracts. No real user clipboard data.
+- Dropbox `CopySelect_v4.0a5.2.4_WORKING/manifest.json` declares `version_name: v4.0a5.2.4`, `version: 4.0.5.24`; GitHub main declares 3.7.9. Baseline authority remains **UNRESOLVED**.
+- CS-007 is **PARTIAL PASS**: deterministic CI verified; Copilot agentic workflows not authenticated/activated, no unattended AI reviewer verified.
+- CS-006 is **IN PROGRESS**: tagging tests exist; no ground-truth precision/recall benchmark, no new tagging runtime release.
+- CS-005 is **IN PROGRESS**: static hotspot inventory exists; actual browser performance remains unmeasured.
