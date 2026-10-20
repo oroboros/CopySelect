@@ -51,6 +51,8 @@ jobs:
         run: node scripts/check-ui-integrity.cjs
       - name: Test local tagging contracts
         run: node --test tests/smart-tagging-contract.test.cjs
+      - name: Inventory potential runtime hotspots
+        run: node scripts/inventory-runtime-hotspots.cjs
       - name: Save source inventory
         if: always()
         shell: bash
@@ -66,4 +68,5 @@ jobs:
           path: |
             source-sha256.txt
             baseline-summary.md
+            runtime-hotspots.json
           retention-days: 30
