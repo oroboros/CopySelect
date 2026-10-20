@@ -49,6 +49,8 @@ jobs:
         run: node scripts/audit-extension-manifest.cjs
       - name: Check HTML asset and ID integrity
         run: node scripts/check-ui-integrity.cjs
+      - name: Test local tagging contracts
+        run: node --test tests/smart-tagging-contract.test.cjs
       - name: Save source inventory
         if: always()
         shell: bash
