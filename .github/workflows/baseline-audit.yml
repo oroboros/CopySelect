@@ -45,6 +45,8 @@ jobs:
           visit('.');
           console.log(JSON.stringify({manifest_version:m.version,referenced_files:refs.length,js_checked:count},null,2));
           NODE
+      - name: Check HTML asset and ID integrity
+        run: node scripts/check-ui-integrity.cjs
       - name: Save source inventory
         if: always()
         shell: bash
