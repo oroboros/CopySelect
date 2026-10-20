@@ -39,7 +39,7 @@ for (const file of htmlFiles) {
     if (/^(chrome-extension:|moz-extension:|blob:)/i.test(url)) continue;
     const clean = decodeURIComponent(url.split(/[?#]/)[0]).replace(/^\//,'');
     if (!clean) continue;
-    const resolved = path.resolve(path.dirname(file),clean);
+    const resolved = path.resolve(url.startsWith('/') ? root : path.dirname(file),clean);
     if (!resolved.startsWith(root + path.sep)) {
       errors.push(relative + ': escaping local resource: ' + url);
     } else if(!fs.existsSync(resolved)) {
