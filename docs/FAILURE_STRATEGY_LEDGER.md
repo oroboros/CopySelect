@@ -27,3 +27,21 @@ Do not delete historical failure entries. Explicitly label unknown/unverified co
 - CS-007 is **PARTIAL PASS**: deterministic CI verified; Copilot agentic workflows not authenticated/activated, no unattended AI reviewer verified.
 - CS-006 is **IN PROGRESS**: tagging tests exist; no ground-truth precision/recall benchmark, no new tagging runtime release.
 - CS-005 is **IN PROGRESS**: static hotspot inventory exists; actual browser performance remains unmeasured.
+
+## Project Reset 2.0 adversarial self-audit — 2026-10-21
+Reviewer: **structured self-review**; no separate independent reviewer or subagent was launched.
+
+| ID / severity | What went wrong and evidence | Root cause | Correction and verification |
+|---|---|---|---|
+| CS-009 P0 | 3.7.9 is used successfully by the user, but speculative newer v4 labels were promoted as better. Historical v4.0a21.7.10 release reports were inspected, not fresh-rerun. | INFERRED: confusing archived release claims with current installed behavior. | **Records corrected:** 3.7.9 USER-REPORTED daily driver, newer v4 candidate NOT TESTED. Match actual installed source hash before promoting. |
+| CS-010 P0 | v4-named backup branch is byte-identical by commit to main 3.7.9. Phase-1 branch has only 8 added docs even though ledger describes runnable store integration. | INFERRED: code and checkpoint documentation diverged. | **Records corrected:** neither branch is independent proof of v4 runtime code. Require complete file tree and runnable source verification. |
+| CS-011 P1 | Later archived v4.1 tree manifest declares 4.1.0 while some UI assets are named 4.0a21.7.22. | INFERRED: layered UI carryover/version drift. | **OPEN:** inventory identity surfaces and compare byte-level candidate before release. |
+| CS-012 P0 | Original connected working folder presently lists no children; preserved external source and UI lab trees still exist elsewhere; cloud parity unknown. | UNKNOWN: could be movement, synchronization, or indexing. | **PARTIAL:** locations established; find actual source packages and verify SHA256 parity before claiming restoration. |
+| CS-013 P0 | v4 diagnostic ZIP passed syntax/ZIP checks but was not tested for installed-browser clipboard, History, upgrade and network/privacy behavior. | INFERRED: static tests were mistaken for runtime confidence. | **Corrected in TEST_MATRIX:** release-blocking runtime cases NOT TESTED; clean-profile inspection required. |
+| CS-014 P1 | A daily-scheduled audit exists only on the engineering branch, while independent AI reviewer activation was never verified. | VERIFIED GitHub workflow and successful branch CI, no separate agent run. | **Corrected:** CI is active for branch events; no proven nightly schedule or AI reviewer. |
+| CS-015 P1 | User-approved page-specific anatomy at risk from repeated CSS overlays; preserved Style Guide v1.5 and page carryover record were found. | INFERRED: missing authority reconciliation in prior UI passes. | **Corrected instructions:** screenshot and DOM inspection at Windows 150%; no generic refactor without per-page acceptance. |
+| CS-016 P1 | Original diagnostic and separately prepared test ZIP have different verified SHA256 hashes, and full three-system sync was claimed before parity existed. | VERIFIED different bytes; incomplete transfer. | **PARTIAL:** hashes recorded; destination hashes and readback are required for full parity. |
+| CS-017 P1 | Raw private source or private storage references could be accidentally disclosed through a public repository. | VERIFIED: GitHub repository is public. | **Corrected:** recovery docs exclude private storage paths and clipboard content; gate publication of external source. |
+| CS-018 P2 | Historical tests reported prior false-green UI geometry, overflow and modal criteria. | HISTORICAL REPORT; no fresh reproduction. | **Process correction:** require rendered interactions and fresh ZIP extraction, not static CSS or old assertion alone. |
+
+Rollback: all reset commits are documentation-only on engineering/agent-foundation-2026-10-20; revert individual commits before any approval if necessary. No frozen or installed source modified.
