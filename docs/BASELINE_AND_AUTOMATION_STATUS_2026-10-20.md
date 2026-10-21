@@ -1,7 +1,7 @@
 # CopySelect Baseline and Automation Status — 2026-10-20
 
 ## Do not infer authority from filenames
-This repository and the Dropbox historical materials are divergent. The GitHub default branch reports manifest version **3.7.9** and the Dropbox loose legacy snapshot reports **3.7.8.14**, while historical ZIP names identify much later **v4** candidates. A name alone does not validate the installed extension or indicate which UI was accepted.
+This repository and the external archive historical materials are divergent. The GitHub default branch reports manifest version **3.7.9** and the external archive loose legacy snapshot reports **3.7.8.14**, while historical ZIP names identify much later **v4** candidates. A name alone does not validate the installed extension or indicate which UI was accepted.
 
 ## GitHub branch evidence
 | Branch | Relationship to main | Interpretation |
@@ -17,8 +17,8 @@ The 2026-10-03 Phase-1 decision chooses IndexedDB as canonical **future** Histor
 ## CI evidence
 Baseline Audit and Privacy lint both returned successful GitHub Actions runs for engineering commit `0e4cc9709aa96f13268a354c59d5174dad55178c`. This is positive static-check evidence, not browser QA.
 
-## Dropbox organization
-Project home: `/Apps_Homemade/CopySelect`
+## external archive organization
+Project home: `[private project archive root]`
 - `01_ACTIVE_SOURCE`: reserved for a promoted, verified baseline.
 - `03_CHECKPOINTS`: multiple original working/rebuild/ZIP/checkpoint variants, historical source snapshot.
 - `04_QA_AND_TESTS`: diagnostics and QA-only variants.
@@ -27,7 +27,7 @@ Project home: `/Apps_Homemade/CopySelect`
 - `Archive`: original deep historical archive pending reduction.
 
 ## Work queues
-- #2 Reconcile and hash-lock authoritative source and Dropbox mirror
+- #2 Reconcile and hash-lock authoritative source and external archive mirror
 - #3 Real-browser IndexedDB authority gates
 - #4 Visual/runtime QA and performance suite
 - #5 Automatic tagging evaluation
