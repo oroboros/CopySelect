@@ -1,0 +1,72 @@
+name: CopySelect Baseline Audit
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 3 * * *'
+permissions:
+  contents: read
+jobs:
+  baseline-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate manifest, referenced files and JavaScript syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('fs');
+          const p = require('path');
+          const cp = require('child_process');
+          const m = JSON.parse(fs.readFileSync('manifest.json','utf8'));
+          const refs = [m.background?.service_worker,m.action?.default_popup,m.options_ui?.page,
+            ...(m.content_scripts||[]).flatMap(s=>s.js||[])].filter(Boolean);
+          const missing = [...new Set(refs)].filter(f=>!fs.existsSync(f));
+          if(m.manifest_version!==3) throw Error('Expected Chrome MV3');
+          if(missing.length) throw Error('Missing referenced files: '+missing.join(', '));
+          const skip = new Set(['node_modules','.git']);
+          let count=0;
+          function visit(dir){
+            for(const entry of fs.readdirSync(dir,{withFileTypes:true})){
+              if(entry.isDirectory() && !skip.has(entry.name)) visit(p.join(dir,entry.name));
+              else if(entry.isFile() && entry.name.endsWith('.js')){
+                const f=p.join(dir,entry.name);
+                cp.execFileSync(process.execPath,['--check',f],{stdio:'pipe'});
+                count++;
+              }
+            }
+          }
+          visit('.');
+          console.log(JSON.stringify({manifest_version:m.version,referenced_files:refs.length,js_checked:count},null,2));
+          NODE
+      - name: Audit MV3 manifest permissions and local dependencies
+        run: node scripts/audit-extension-manifest.cjs
+      - name: Check HTML asset and ID integrity
+        run: node scripts/check-ui-integrity.cjs
+      - name: Test local tagging contracts
+        run: node --test tests/smart-tagging-contract.test.cjs
+      - name: Inventory potential runtime hotspots
+        run: node scripts/inventory-runtime-hotspots.cjs
+      - name: Save source inventory
+        if: always()
+        shell: bash
+        run: |
+          find . -type f -not -path './.git/*' -not -path './node_modules/*' -print0 | sort -z | xargs -0 -r sha256sum > source-sha256.txt
+          printf '# CopySelect CI snapshot\n\nCommit: %s\n\n' "$GITHUB_SHA" > baseline-summary.md
+          printf 'Inventory: source-sha256.txt\n' >> baseline-summary.md
+      - name: Upload baseline inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: copyselect-baseline-${{ github.run_id }}
+          path: |
+            source-sha256.txt
+            baseline-summary.md
+            runtime-hotspots.json
+          retention-days: 30
